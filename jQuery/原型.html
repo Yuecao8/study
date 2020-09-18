@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>原型</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  // 构造函数 -- 首字母大写; 用new关键字来调用;用来新建实例对象
+  function Person(age) {
+    this.age = age
+  }
+  Person.prototype.name = 'kavin'
+  var person1 = new Person()
+  var person2 = new Person()
+  // console.log(person1.name) //kavin
+  // console.log(person2.name)  //kavin
+  console.log(person1.constructor)
+  console.log(person1)
+
+
+  function mouseMove(ev) {
+    Ev = ev || window.event;
+    var mousePos = mouseCoords(ev);
+    console.log(mousePos.x + 'mousePos.x', mousePos.y)
+  }
+
+  function mouseCoords(ev) {
+    if (ev.pageX || ev.pageY) {
+      return {
+        x: ev.pageX,
+        y: ev.pageY
+      };
+    }
+    return {
+      x: ev.clientX + document.body.scrollLeft - document.body.clientLeft,
+      y: ev.clientY + document.body.scrollTop - document.body.clientTop
+    };
+  }
+  document.onmousemove = mouseMove;
+</script>
+
+</html>

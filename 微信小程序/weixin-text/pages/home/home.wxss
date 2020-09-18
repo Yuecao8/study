@@ -1,0 +1,25 @@
+/* pages/home/home.wxss */
+image{
+  width: 300rpx;
+  height: 200rpx;
+}
+.swiperContainer{
+  height: 300rpx;
+}
+.swiperItem{
+  text-align: center;
+  width: 100%;
+  height: 200rpx;
+  position: relative;
+}
+.title{
+  position: absolute;
+  bottom: 50rpx;
+  left:50%;
+  transform: translateX(-50%);
+  color: #333;
+}
+map{
+  width: 100%;
+  height: 500rpx;
+}

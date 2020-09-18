@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<meta content="telephone=no" name="format-detection" />
+		<title>发帖</title>
+		<link rel="stylesheet" type="text/css" href="css/post.css"/>
+		<script type="text/javascript" src="assets/change_resize.js"></script>
+		<script type="text/javascript" src="assets/zepto.min.js"></script>
+	</head>
+	<body>
+		<div id="app" v-cloak>
+			<div class="wrapper">
+				<div class="wrapper_header">
+					<span class="wrapper_sub">话 题</span>
+					<div class="wrapper_choose" @click="getSortData()">
+						<span>{{topicName}}</span>
+						<i></i>
+					</div>
+				</div>
+				<div class="wrapper_box">
+					<div class="wrapper_box_content">
+						<textarea @input="descArea()" v-model="content" style="resize: none;" placeholder="说点什么吧..."></textarea>
+					</div>
+					<div class="wrapper_box_files">
+						<div v-for="(item,key) in imgArr" :key = "item.index">
+							<img :src="item.src" />
+							<span class="close_img" @click="delImg(key)"></span>
+						</div>
+						<div v-for="(item,key) in videoArr" :key = "item.index">
+							<img class="imgRotate" src="./images/loading.png" />
+							<span class="close_img" @click="delVid(key)"></span>
+						</div>
+						<div class="voicePic" v-for="(item,key) in audioArr" :key = "item.index">
+							<audio :src="item.src" ></audio>							
+							<span class="close_img" @click="delAud(key)"></span>
+						</div>
+						<!--<div>
+							<img src="" alt="" />
+							<span class="close_img"></span>
+						</div>
+						<div>
+							<img src="" alt="" />
+							<span class="close_img"></span>
+						</div>-->
+					</div>
+				</div>
+				<div class="wrapper_lists">
+					<span class="wrapper_picture" @click="addPic()">
+						<input name="files" id="uploaderInput" type="file" accept="image/*"  multiple/>
+					</span>
+					<span class="wrapper_video" @click="addVideo()">
+						<input name="video" type="file" id='videoInput' accept="video/*"  multiple>
+					</span>
+					<!-- <span class="wrapper_audio" @click="addAudio()">
+						<input name="audio" type="file" id='audioInput' accept="audio/*" multiple>
+					</span> -->
+				</div>
+				<!-- <div class="wrapper_position">
+					<i></i>
+					<span>你在哪里</span>
+				</div> -->
+				<div class="wrapper_button" @click="getSubmit()">
+					<span>提交</span>
+				</div>
+				
+			</div>
+			<div class="dialog" v-if="show">
+				<div class="dialog_box">
+					<!-- <div><span>全部</span></div> -->
+					<div v-for = "(list,key) in selectLists" :class="{checked:key == num}" :key="list.key" @click="getTopic(list,key)"><span>{{list.title}}</span></div>
+				</div>
+			</div>
+			 <!-- 反馈 -->
+			 <div class="tips" v-if='showTips'>
+					<span>{{tipMessage}}</span>
+				</div>
+			<!-- 视频提示框 -->
+			<!-- <div class="dialog_comment" v-show='videoFlag'>
+				<div class="dialogBox">
+					<div class="top">
+						<div class="videotape" @click='_shootVideo()'>
+							<span>录像</span>
+							<span><img src="./images/Shape.png" alt=""></span>
+						</div>
+						<div class="videotape2" @click='_chooseVideo()'>
+							<span>图库</span>
+							<span><img src="./images/Shape.png" alt=""></span>
+						</div>
+					</div>
+					<div class="quxiao" @click='getQuxiao'>
+						<span>取消</span>
+					</div>
+				</div> -->
+				
+			</div>
+			<!-- 图片提示框 -->
+			<!-- <div class="dialog_comment" v-show='picFlag'>
+				<div class="dialogBox">
+					<div class="top">
+						<div class="videotape" @click='takePhoto()'>
+							<span>拍照</span>
+							<span><img src="./images/Shape.png" alt=""></span>
+						</div>
+						<div class="videotape2" @click='goToPhotos()'>
+							<span>图库</span>
+							<span><img src="./images/Shape.png" alt=""></span>
+						</div>
+					</div>
+					<div class="quxiao" @click='getQuxiao'>
+						<span>取消</span>
+					</div>
+				</div>
+				
+			</div> -->
+		</div>
+	</body>
+	<script type="text/javascript" src="assets/axios.min.js"></script>
+	<script src="./assets/vue.js"></script>
+	<script src="./assets/zepto.min.js"></script>
+	<script src="./assets/sdk.js"></script>
+	<script src="./assets/common.js"></script>
+  <script src="./assets/vconsole.min.js"></script>    
+  <script src="./js/post.js"></script>
+</html>

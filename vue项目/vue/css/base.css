@@ -1,0 +1,170 @@
+@charset "UTF-8";
+/*清除格式*/
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+blockquote,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+pre,
+form,
+fieldset,
+button,
+input,
+legend,
+div,
+img {
+    border: medium none;
+    margin: 0;
+    padding: 0;
+}
+li{list-style:none}
+
+/*h5新标签*/
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section {
+    display: block;
+}
+
+/* 重置表格元素 */
+ol,
+ul {
+    list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: 100%;
+    font-weight: 500;
+}
+
+img {
+    border: none;
+}
+
+textarea {
+    -webkit-appearance: none;
+}
+
+html {
+    font-size: 100px;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 16px;
+    color: #333;
+    overflow:auto;   /* 用于 android4+，或其他设备 */
+	-webkit-overflow-scrolling:touch;    /* 用于 ios5+ */
+}
+
+/*清除浮动*/
+.clear {
+    clear: both;
+    height: 0;
+    line-height: 0;
+    font-size: 0;
+}
+
+.clearfix:after {
+    clear: both;
+    content: '.';
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+.clearfix {
+    zoom: 1;
+}
+
+a {
+    text-decoration: none;
+  	color:#333333;
+}
+
+a:hover {
+    text-decoration: none;
+  	color:#333333;
+}
+
+/* 宽度 */
+.w100 {
+    width: 100%;
+}
+
+/* 位置 */
+.text-align {
+    text-align: center;
+}
+
+/*display*/
+
+.hidden {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+
+/*浮动*/
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.overflow {
+    overflow: hidden;
+}
+
+/*定位*/
+
+.pr {
+    position: relative;
+}
+
+.pa {
+    position: absolute;
+}
+
+.pf {
+    position: fixed;
+}
+
+/* 百度播放器 */
+.jw-icon-barlogo-new{display: none!important;}
+.jw-flag-compact-player .jw-text-duration,
+.jw-flag-compact-player .jw-text-elapsed{
+    display: inline-block!important;
+}
+

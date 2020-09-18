@@ -1,0 +1,427 @@
+.center {
+  width: 1200px;
+  margin: 0 auto;
+}
+body {
+  font-family: PingFangSC-Regular;
+}
+div {
+  box-sizing: border-box;
+}
+.daterangepicker.dropdown-menu {
+  display: none;
+}
+.shouqi {
+  cursor: pointer;
+  display: inline-block;
+  background-size: contain;
+  width: 12px;
+  height: 6px;
+  background: url(images/shouqi.png) center center no-repeat;
+}
+.shouqi.active {
+  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  transition: transform 0.5s;
+}
+.checkIcon {
+  margin-right: 12px;
+  display: inline-block;
+  background-size: contain;
+  width: 16px;
+  height: 16px;
+  background: url(images/weixuanzhong.png) center center no-repeat;
+  cursor: pointer;
+}
+.closeIcon {
+  cursor: pointer;
+  margin-left: 12px;
+  display: inline-block;
+  background-size: contain;
+  width: 10px;
+  height: 10px;
+  background: url(images/close.png) center center no-repeat;
+}
+.checkIcon.active {
+  cursor: pointer;
+  background: url(images/danxuanxuanzhong.png) center center no-repeat;
+}
+.downIcon {
+  cursor: pointer;
+  margin-left: 12px;
+  display: inline-block;
+  background-size: contain;
+  width: 10px;
+  height: 10px;
+  background: url(images/down.png) center center no-repeat;
+}
+.upIcon {
+  cursor: pointer;
+  margin-left: 12px;
+  display: inline-block;
+  background-size: contain;
+  width: 10px;
+  height: 10px;
+  background: url(images/up.png) center center no-repeat;
+}
+.cameraIcon {
+  cursor: pointer;
+  display: inline-block;
+  background-size: contain;
+  width: 21px;
+  height: 18px;
+  background: url(images/camera.png) center center no-repeat;
+}
+.hengtuIcon,
+.shutuIcon,
+.quanbuIcon,
+.fangtuIcon {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  background-size: contain;
+  margin-right: 9px;
+}
+.hengtuIcon {
+  background: url(images/hengtu.png) center center no-repeat;
+}
+.shutuIcon {
+  background: url(images/shutu.png) center center no-repeat;
+}
+.quanbuIcon {
+  background: url(images/quanbu.png) center center no-repeat;
+}
+.fangtuIcon {
+  background: url(images/fangtu.png) center center no-repeat;
+}
+/* \ flex布局 */
+.flexBox {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+/* // 改变主轴方向 */
+.flexColumn {
+  -webkit-box-orient: vertical;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+/* // 两端对齐 */
+.flexBetween {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+/* // 垂直居中 */
+.flexAlign {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+/* // 左对齐 */
+.flexLeft {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: justify;
+  justify-content: flex-start;
+}
+.flexRight {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: justify;
+  justify-content: flex-end;
+}
+/* // 水平居中 */
+.flexCenter {
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+.flexMiddle {
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.flexWrap {
+  -webkit-flex-wrap: wrap;
+  -moz-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  -o-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+.searchBox {
+  margin-top: 30px;
+}
+.searchBox .search_head {
+  background: #FFFFFF;
+  padding-bottom: 20px;
+}
+.searchBox .search_head .search_input {
+  background: #FFFFFF;
+  border: 1px solid #DDDDDD;
+  border-radius: 2px;
+  width: 929px;
+  height: 44px;
+}
+.searchBox .search_head .search_input input {
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border: none;
+  padding: 11px 15px;
+  box-sizing: border-box;
+}
+.searchBox .search_head .search_input img {
+  width: 20px;
+  height: 20px;
+  margin-top: 10px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+.searchBox .search_head .search_input .el-loading-spinner .circular {
+  width: 21px;
+  height: 18px;
+  line-height: 18px;
+}
+.searchBox .search_head .search_input .el-loading-spinner {
+  margin-top: -10px;
+}
+.searchBox .search_head .search_btn .img_btn {
+  cursor: pointer;
+  text-align: center;
+  line-height: 32px;
+  border: 1px solid #E2313D;
+  border-radius: 2px;
+  width: 66px;
+  height: 32px;
+  margin-left: 10px;
+  font-size: 14px;
+  letter-spacing: 0;
+  background: #E2313D;
+  color: #fff;
+  flex: 1;
+}
+.searchBox .search_head .search_btn .img_btn.active {
+  background: #E2313D;
+  color: #FFFFFF;
+}
+.searchBox .search_head .search_btn .articeSearch {
+  margin-left: 58px;
+  line-height: 44px;
+  cursor: pointer;
+}
+.searchBox .search_head .search_btn .articeSearch span {
+  font-family: PingFangSC-Regular;
+  font-size: 14px;
+  color: #999999;
+  letter-spacing: 1.17px;
+  text-align: right;
+}
+.searchBox .search_head .search_btn .articeSearch .checkIcon {
+  margin-right: 5px !important;
+}
+.searchBox .search_head .search_key.postImg {
+  position: relative;
+  height: 120px;
+  background: #ccc;
+  width: 1047px;
+}
+.searchBox .search_head .search_key.postImg .postImgBox {
+  width: 125px;
+  height: 22px;
+  overflow: hidden;
+  position: absolute;
+  right: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+.searchBox .search_head .search_key.postImg .postImgBox input {
+  position: relative;
+  height: 29px;
+}
+.searchBox .search_head .search_key.postImg .postImgBox p {
+  text-align: center;
+  font-size: 16px;
+  color: #DD2F3C;
+  letter-spacing: 0.53px;
+  position: relative;
+  height: 29px;
+}
+.searchBox .search_condition {
+  margin-top: 30px;
+}
+.searchBox .search_condition .condition {
+  font-family: PingFangSC-Regular;
+  font-size: 14px;
+  color: #666666;
+  letter-spacing: 0;
+  text-align: left;
+  height: 34px;
+  line-height: 34px;
+  margin-bottom: 20px;
+}
+.searchBox .search_condition .condition .title {
+  margin-right: 20px;
+}
+.searchBox .search_condition .condition .text {
+  font-family: PingFangSC-Regular;
+  font-size: 14px;
+  color: #4F4F4F;
+  letter-spacing: 1.17px;
+  text-align: left;
+  margin-right: 10px;
+}
+.searchBox .search_condition .condition .paixu {
+  font-family: PingFangSC-Regular;
+  font-size: 14px;
+  color: #4F4F4F;
+  letter-spacing: 1.17px;
+  text-align: left;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.searchBox .search_condition .condition .paixu.active {
+  color: #E2313D;
+}
+.searchBox .search_condition .condition .el-select {
+  margin-right: 20px;
+}
+.searchBox .search_condition .condition .el-input__icon {
+  line-height: 34px;
+}
+.searchBox .search_condition .condition .el-input__inner,
+.searchBox .search_condition .condition .el-date-editor.el-input {
+  height: 34px;
+  width: 160px;
+}
+.searchBox .search_condition .condition .goutuBox .iconBox {
+  font-family: PingFangSC-Regular;
+  font-size: 14px;
+  color: #333333;
+  letter-spacing: 0;
+  text-align: left;
+  margin-right: 40px;
+  cursor: pointer;
+}
+.searchBox .search_condition .condition .goutuBox .iconBox.active {
+  color: #E2313D;
+}
+.searchBox .search_condition .condition .goutuBox .iconBox.active .hengtuIcon {
+  background: url(images/hengtu_active.png) center center no-repeat;
+}
+.searchBox .search_condition .condition .goutuBox .iconBox.active .shutuIcon {
+  background: url(images/shutu_active.png) center center no-repeat;
+}
+.searchBox .search_condition .condition .goutuBox .iconBox.active .fangtuIcon {
+  background: url(images/fangtu_active.png) center center no-repeat;
+}
+.searchBox .search_contain {
+  background: #F8F8F8;
+  padding-bottom: 65px;
+}
+.searchBox .search_contain .search_source {
+  padding: 30px 0;
+}
+.searchBox .search_contain .search_source .sourcename {
+  margin-right: 10px;
+}
+.searchBox .search_contain .search_source .search_result {
+  margin-left: 32px;
+}
+.searchBox .search_contain .search_source .search_result span {
+  color: #E2313D;
+}
+.searchBox .search_contain .search_source .upImg {
+  width: 106px;
+  height: 76px;
+  overflow: hidden;
+  background-color: #000;
+  margin-right: 20px;
+  position: relative;
+}
+.searchBox .search_contain .search_source .upImg img {
+  width: 100%;
+  max-height: 100%;
+}
+.searchBox .search_contain .el-pagination {
+  margin-top: 70px;
+  margin-left: 440px;
+  margin-bottom: 122px;
+  font-size: 14px;
+  font-family: PingFangSC;
+  font-weight: 400;
+  color: #666666;
+  line-height: 20px;
+  letter-spacing: 1px;
+}
+.searchBox .search_contain .el-pagination .el-pager li {
+  background: unset;
+  width: 40px;
+  line-height: 40px;
+  height: 40px;
+}
+.searchBox .search_contain .el-pagination .el-pager li:hover {
+  color: #e2313d;
+}
+.searchBox .search_contain .el-pagination .btn-prev,
+.searchBox .search_contain .el-pagination .btn-next,
+.searchBox .search_contain .el-pagination .el-pagination__jump {
+  background: unset;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+}
+.searchBox .search_contain .el-pagination .el-pager li.active {
+  background: #e2313d;
+  color: #fff;
+}
+.searchBox .search_contain .imgList a {
+  position: relative;
+  box-sizing: border-box;
+  height: 210px;
+  width: 288px;
+  background-color: #000;
+  margin: 5px;
+}
+.searchBox .search_contain .imgList a img {
+  max-width: 100%;
+  max-height: 100%;
+}
+.searchBox .search_contain .imgList a:hover .title {
+  display: block;
+}
+.searchBox .search_contain .imgList a .title {
+  display: none;
+  font-size: 14px;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  padding-left: 10px;
+  box-sizing: border-box;
+  height: 50px;
+  width: 100%;
+  color: #fff;
+  background-image: linear-gradient(-180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
+}
+.searchBox .search_contain .imgList a .title p {
+  box-sizing: border-box;
+  margin-top: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.searchBox .search_contain .imgList a .title span {
+  box-sizing: border-box;
+  color: #ccc;
+}

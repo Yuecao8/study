@@ -1,0 +1,93 @@
+html {
+  font-size: 62.5%;
+  line-height: 1;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body, blockquote, figure, form, h1, h2, h3, h4, h5, h6, p, dd, dl, li, ol, ul, td, th {
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit;
+}
+
+h1 {
+  font-size: #{$font-size-base + 6px};
+}
+
+h2 {
+  font-size: #{$font-size-base + 4px};
+}
+
+h3 {
+  font-size: #{$font-size-base + 2px};
+}
+
+h4, h5, h6, p {
+  font-size: inherit;
+  font-weight: normal;
+}
+
+a {
+  color: $link-color;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: $link-hover-color;
+  }
+}
+
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+figure {
+  margin: 0;
+}
+
+img {
+  vertical-align: middle;
+}
+
+sup, sub {
+  font-size: 75%;
+  line-height: 0;
+}
+
+progress,
+sub,
+sup {
+  vertical-align: baseline;
+}
+
+small {
+  font-size: 80%;
+}
+
+input,
+button,
+select,
+textarea {
+  line-height: inherit;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+em {
+  font-style: normal;
+}
+
+[hidden] {
+  display: none !important;
+}

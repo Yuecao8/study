@@ -1,0 +1,92 @@
+// 变量
+@import "base/vars";
+
+// 混入
+@import "base/mixins";
+
+// 重置
+@import "base/reset";
+
+// ui 主题重置
+@import "base/theme-reset";
+
+// 工具类
+@import "base/utils";
+*{
+  box-sizing: border-box;
+}
+html{
+  width: 100%;
+  height: 100%;
+}
+body {
+  width: 100%;
+  height: 100%;
+  font-family: $font-family-base;
+  font-weight: normal;
+  font-size: $font-size-base;
+  color: $text-regular-color;
+  background-color: $body-bg-color;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.main{
+  width: 100%;
+  height: 100%;
+}
+// 布局
+$aside-width:200px;
+.app-aside{
+  width: $aside-width !important;
+  height: 100%;
+}
+.app-container{
+  height: 100%;
+}
+//标题
+.title-box{
+  font-size: 14px;
+  color: #333333;
+  line-height: 14px;
+  margin-bottom:16px;
+}
+
+.w-30{
+  width: 30px;
+ }
+.w-200{
+  width: 200px;
+ }
+ .w-80{
+  width: 80px;
+ }
+ .w-60{
+  width: 60px;
+ }
+ .w-140{
+  width: 140px;
+ }
+ .w-100{
+   width: 100px;
+ }
+ .w-300{
+  width: 300px;
+ }
+
+// 滚动条样式
+// ::-webkit-scrollbar {
+//   width: 6px;
+//   &:horizontal {
+//     height: 6px;
+//   }
+// }
+// ::-webkit-scrollbar-track {
+//   background-color: transparent;
+// }
+// ::-webkit-scrollbar-thumb {
+//   border-radius: 3px;
+//   background-color: #e0edff;
+//   &:hover {
+//     background-color: #4d96ff;
+//   }
+// }

@@ -1,0 +1,115 @@
+.modal {
+  position: absolute;
+  left: 50%;
+  top: 57%;
+  margin-left: -0.9rem;
+  z-index: 999;
+  text-align: center;
+  color: #fff;
+  width: 1.8rem;
+  height: 0.45rem;
+  line-height: 0.45rem;
+  border-radius: 0.08rem;
+  font-size: 0.14rem;
+  background: rgba(0, 0, 0, 0.6);
+}
+.top {
+  height: 2.11rem;
+  background: url('../images/login/top.png') no-repeat center center;
+  background-size: contain;
+  padding: 0rem 0.15rem 0 0.15rem;
+  text-align: center;
+  margin-bottom: 0.3rem;
+}
+.top .top-item {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.23rem;
+}
+.top .top-item .back-icon {
+  width: 0.11rem;
+  height: 0.2rem;
+}
+.top .top-item a {
+  color: #fff;
+  font-size: 0.18rem;
+}
+.top .avatar {
+  margin-top: 0.3rem;
+  width: 0.8rem;
+  height: 0.8rem;
+}
+.title {
+  margin-left: 0.35rem;
+  font-size: 0.22rem;
+  margin-bottom: 0.5rem;
+}
+.input-container {
+  padding: 0 0.35rem;
+  margin-bottom: 0.35rem;
+}
+.input-container .input-item {
+  height: 0.56rem;
+  border-bottom: 0.01rem solid #ccc;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.input-container .input-item input {
+  font-size: 0.16rem;
+  border: none;
+  outline: none;
+  margin-left: 0.2rem;
+}
+.input-container .input-item input::-webkit-input-placeholder {
+  color: #c4c4c4;
+}
+.input-container .input-item .user-icon {
+  width: 0.16rem;
+  height: 0.18rem;
+}
+.input-container .input-item .phone-icon {
+  width: 0.14rem;
+  height: 0.19rem;
+}
+.input-container .input-item .pwd-icon {
+  width: 0.16rem;
+  height: 0.19rem;
+}
+.input-container .input-item .hide-pwd {
+  position: absolute;
+  right: 0;
+  width: 0.16rem;
+  height: 0.07rem;
+}
+.input-container .input-item .show-pwd {
+  position: absolute;
+  right: 0;
+  width: 0.16rem;
+  height: 0.13rem;
+}
+.login-button {
+  margin-left: 0.35rem;
+  text-align: center;
+  width: 3.05rem;
+  height: 0.44rem;
+  line-height: 0.44rem;
+  font-size: 0.18rem;
+  color: #fff;
+  margin-bottom: 0.2rem;
+}
+.login-button.disabled {
+  background: url('../images/login/login_disabled.png') no-repeat;
+  background-size: contain;
+}
+.login-button.abled {
+  background: url('../images/login/login.png') no-repeat;
+  background-size: contain;
+}
+.forget-pwd {
+  margin-left: 1.6rem;
+  font-size: 0.14rem;
+  color: #999999;
+}

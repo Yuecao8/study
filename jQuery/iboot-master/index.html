@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <style>
+    .iboot-item {
+      transition: all .4s ease;
+      background-color: white;
+    }
+
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+      background-color: #ccc;
+    }
+
+    .clear:after {
+      content: '';
+      display: block;
+      clear: both;
+      width: 100%;
+    }
+
+    button {
+      width: 60%;
+      height: 40px;
+      display: block;
+
+      margin: 10px auto;
+    }
+  </style>
+</head>
+
+<body style="overflow-y: scroll;">
+  <div class="iboot-controller clear">
+  </div>
+  <button id="loadmore">加载更多</button>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="./iboot.js"></script>
+<script>
+  var gPage = 0;
+  $(function () {
+    function Srr(lowValue, highValue) {
+      var choice = highValue - lowValue + 1;
+      return Math.floor(Math.random() * choice + lowValue);
+    }
+
+    function getImgList(len) {
+      var random = [];
+      $.ajax({
+        url: "http://middle-api.plus.vinj.cn/api/gallery/common/search?search_text=%E9%9B%A8%E8%8A%B1&per_num=" +
+          len + "&page=" + gPage,
+        data: {},
+        dataType: "json",
+        type: "get",
+        async: false,
+        cache: false,
+        success: function (res) {
+          var tmp_length = res.data.data.length;
+          if (tmp_length > 0) {
+            var ret = res.data.data;
+            for (var j = 0; j < tmp_length; j++) {
+              random.push({
+                src: ret[j].index_pic + '?imageView/w/400',
+                alt: ret[j].title,
+              })
+            }
+          } else {
+            $("#loadmore").html('没有更多了').attr('disabled', 'disabled');
+          }
+
+
+        },
+        error: function () {
+
+        }
+      })
+      return random;
+    }
+
+    var iboot = new Iboot($('.iboot-controller'), {
+      list: getImgList(50),
+      baseHeight: 300,
+      template: function (dom) {
+        dom.addClass('some')
+        return dom
+      },
+      beforeLoad: function () {
+        console.log('beforeLoad')
+      },
+      afterLoad: function () {
+        console.log('afterLoad')
+      }
+    })
+
+    $(window).resize(function () {
+      iboot.resize()
+    })
+
+    $('#loadmore').click(function () {
+      gPage += 1;
+      iboot.loadMore(getImgList(50))
+    })
+  })
+</script>
+
+</html>

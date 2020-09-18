@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="watch-example">
+    <p>
+      Ask a yes/no question:
+      <input v-model="question">
+    </p>
+    <p>{{ answer }}</p>
+    <video v-on:click="warn($event)">
+      <source src="#" type="">
+    </video>
+    <div>测试 </div>
+    <select v-model="selected">
+      <option v-for="option in options" v-bind:value="option.value">
+        {{ option.text }}
+      </option>
+    </select>
+    <span>Selected: {{ selected }}</span>
+
+    <!--  .lazy  会在使用change事件时进行数据同步-->
+    <!-- 在input框中输入数据后，当输入框失去焦点后会同步数据 content值改变 -->
+    <input type="text" v-model.lazy='content' @change='console.log(content)'>
+    <span>{{content}}</span>
+    <!-- v-model.number  自动将用户的输入值转为数值类型 -->
+    <input v-model.number="age" type="number">
+    <span>{{age}}</span>
+    <!-- v-model.trim 自动过滤用户输入的首尾空白字符 -->
+    <button-counter></button-counter>
+    <sha></sha>
+    <sha></sha>
+    <sha></sha>
+    <sha></sha>
+    <sha></sha>
+    <sha></sha>
+  </div>
+</body>
+
+</html>
+<script src="https://cdn.bootcss.com/vue/2.5.22/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+<!-- <script src="./zujian.js"></script> -->
+<script>
+  Vue.component('button-counter', {
+    data: function () {
+      return {
+        count: 0
+      }
+    },
+    template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+  });
+  Vue.component('sha', {
+    data: function () {
+      return {
+        count: 0
+      }
+    },  
+    template: '<p @click="count++">你是一个傻子{{count}}</p>'
+  })
+  var watchExampleVM = new Vue({
+    el: '#watch-example',
+    data: {
+      question: '',
+      content: '',     
+      age: '',
+      answer: '除非你提问，否则我不能给你答案!',
+      selected: 'A',
+      options: [{
+          text: 'One',
+          value: 'A'
+        },
+        {
+          text: 'Two',
+          value: 'B'
+        },
+        {
+          text: 'Three',
+          value: 'C'
+        }
+      ]
+    },
+    watch: {
+      // 如果 `question` 发生改变，这个函数就会运行
+      question: function (newQuestion, oldQuestion) {
+        this.answer = '正在等待您停止键入…'
+        this.debouncedGetAnswer()
+      }
+    },
+    created: function () {
+      // `_.debounce` 是一个通过 Lodash 限制操作频率的函数。
+      // 在这个例子中，我们希望限制访问 yesno.wtf/api 的频率
+      // AJAX 请求直到用户输入完毕才会发出。想要了解更多关于
+      // `_.debounce` 函数 (及其近亲 `_.throttle`) 的知识，
+      // 请参考：https://lodash.com/docs#debounce
+      this.debouncedGetAnswer = _.debounce(this.getAnswer, 500)
+    },
+    methods: {
+      getAnswer: function () {
+        if (this.question.indexOf('?') === -1) {
+          this.answer = '问题通常包含问号' 
+          return
+        }
+        this.answer = 'Thinking...'
+        var vm = this
+        axios.get('https://yesno.wtf/api')
+          .then(function (response) {
+            vm.answer = _.capitalize(response.data.answer)
+          })
+          .catch(function (error) {
+            vm.answer = 'Error! Could not reach the API. ' + error
+          })
+      },
+      warn: function (event) {
+
+        // 现在我们可以访问原生事件对象
+        if (event) event.preventDefault()
+        console.log(event.target)
+        // alert(message)
+      }
+    }
+  })
+ 
+</script>

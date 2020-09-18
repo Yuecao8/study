@@ -1,0 +1,37 @@
+<!--pages/home/home.wxml-->
+  <page-meta>
+    <navigation-bar title="{{nbTitle}}" loading="{{nbLoading}}" front-color="{{nbFrontColor}}" background-color="{{nbBackgroundColor}}" color-animation-duration="2000" color-animation-timing-func="easeIn" />
+  </page-meta>
+  <text>pages/home/home.wxml</text>
+  <view>这是一个盒子</view>
+  <image src='../../images/01.jpg'></image>
+
+    <view class="container">
+      <view class="page-body">
+        <view class="page-section">
+          <view class="page-section-title">
+            <text>flex-direction: row\n横向布局</text>
+          </view>
+          <view class="page-section-spacing">
+            <view class="flex-wrp" style="flex-direction:row;">
+              <view class="flex-item demo-text-1">
+                <image src='../../images/02.jpg'></image>
+              </view>
+              <view class="flex-item demo-text-2">
+                <image src='../../images/03.jpg'></image>
+              </view>
+              <view class="flex-item demo-text-3">
+                <image src='../../images/04.jpg'></image>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <swiper class='swiperContainer' indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular='true'>
+      <swiper-item class="swiperItem" wx:for="{{swiperList}}" wx:key="*this">
+        <image src='{{item.index_pic}}'></image>
+        <text class='title'>{{item.title}}</text>
+      </swiper-item>
+    </swiper>
+<map></map>

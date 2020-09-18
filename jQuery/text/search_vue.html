@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="./js/jquery-1.10.1.min.js"></script>
+  <link rel="stylesheet" href="./ceshi.css">
+  <link rel="stylesheet" href="./text.css">
+</head>
+
+<body>
+  <div id="app">
+    <div class="searchBox">
+      <div class="search_head container">
+        <div class="search_key flexBox flexLeft">
+          <div class="search_input flexBox flexBetween">
+            <input type="text" value="" id="keywords" v-model='search_text'>
+            <el-upload v-if='isLogin' class="upload-demo flexBox flexAlign" name='image' :show-file-list='false'
+              :multiple='false' :on-success='uploadSuccess' :on-change='handleChange' :on-error='uploadError'
+              action="http://middle-api.plus.vinj.cn/api/gallery/photos/upload">
+              <i class="cameraIcon" style="margin-right: 12px" v-loading='showImg'></i>
+            </el-upload>
+            <!-- <div class="cameraIcon flexBox flexAlign" style="height: 44px;margin-right: 12px"
+            v-if ='isLogin'
+            @click="showUpload = true"></div> -->
+          </div>
+          <div class="search_btn flexBox flexAlign flexBetween">
+            <span class="img_btn" @click='search()'>搜索</span>
+            <div class="articeSearch flexBox flexAlign" v-if='isLogin' @click="changeCondition">
+              <span>展开高级搜索</span>
+              <span :class="upCondition?'upIcon':'downIcon'"></span>
+            </div>
+          </div>
+        </div>
+        <div class="search_condition" v-if="isLogin && upCondition">
+          <div class="condition">
+            <span class="title">栏目：</span>
+            <el-select v-model="columnValue" clearable placeholder="请选择" @clear = 'clearColumn'>
+              <el-option v-for="item in columnList" :key="item.id" :label="item.name" :value="item.id"
+                @click.native='getSecond(item.id)'>
+              </el-option>
+            </el-select>
+            <el-select v-model="secondColumnValue" clearable placeholder="请选择">
+              <el-option v-for="item in secondColumnList" :key="item.id" :label="item.name" :value="item.id"
+                @click.native='sColumnChange(item.id)'>
+              </el-option>
+            </el-select>
+          </div>
+          <div class="condition">
+            <span class="title">地点：</span>
+            <el-select v-model="isChina" clearable placeholder="请选择" @clear = 'clearChina'>
+              <el-option v-for="item in chinaOption" :key="item.value" :label="item.label" :value="item.value">
+              </el-option>
+            </el-select>
+            <div v-show="isChina === 1" style="display: inline-block;">
+              <el-select v-model="shenValue" clearable placeholder="请选择省" @clear = 'clearShen'>
+                <el-option v-for="item in locationList" :key="item.id" :label="item.name" :value="item.id"
+                  @click.native='getCity(item.id)'>
+                </el-option>
+              </el-select>
+              <el-select v-model="shiValue" clearable placeholder="请选择市" @clear = 'clearShi'>
+                <el-option v-for="item in cityList" :key="item.id" :label="item.name" :value="item.id"
+                  @click.native='getArea(item.id)'>
+                </el-option>
+              </el-select>
+              <el-select v-model="quValue" clearable placeholder="请选择区">
+                <el-option v-for="item in areaList" :key="item.id" :label="item.name" :value="item.id"
+                  @click.native='getAreaId(item.id)'>
+                </el-option>
+              </el-select>
+            </div>
+          </div>
+          <div class="condition">
+            <span class="title">时间：</span>
+            <el-select v-model="timeValue" clearable placeholder="请选择">
+              <el-option v-for="item in timeOption" :key="item.value" :label="item.label" :value="item.value">
+              </el-option>
+            </el-select>
+            <span class="text">从</span>
+            <el-date-picker v-model="startTime" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"
+              @change='getStarTime'></el-date-picker>
+            <span class="text">到</span>
+            <el-date-picker v-model="endTime" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"
+              @change='getEndTime'></el-date-picker>
+            <span :class="[{'active': order==='asc'},'paixu']" @click="getOrder('asc')">正序</span>
+            <span :class="[{'active': order==='desc'},'paixu']" @click="getOrder('desc')">倒序</span>
+          </div>
+          <div class="condition flexBox flexLeft flexAlign">
+            <span class="title">构图：</span>
+            <div class="goutuBox flexBox flexLeft">
+              <div :class="[{'active': goutuList.indexOf(2) > -1},'iconBox','flexBox','flexAlign']"
+                @click="getGoutu(2)">
+                <i class="hengtuIcon"></i>
+                <span>横图</span>
+              </div>
+              <div :class="[{'active': goutuList.indexOf(3) > -1},'iconBox','flexBox','flexAlign']"
+                @click="getGoutu(3)">
+                <i class="shutuIcon"></i>
+                <span>竖图</span>
+              </div>
+              <div :class="[{'active': goutuList.indexOf(1) > -1},'iconBox','flexBox','flexAlign']"
+                @click="getGoutu(1)">
+                <i class="fangtuIcon"></i>
+                <span>方图</span>
+              </div>
+            </div>
+          </div>
+          <div class="search_btn">
+            <span class="img_btn" style="padding: 6px 15px;" @click='search()'>搜索</span>
+          </div>
+        </div>
+      </div>
+      <div class="search_contain">
+        <div class="container">
+          <div class="search_source flexBox flexLeft flexAlign">
+            <!-- <div class="upImg flexBox flexMiddle" v-if="showImg" v-loading = 'showImg'>
+              <img src='./images/02.jpg' alt="">
+            </div> -->
+            <span class="sourcename">搜索结果：</span>
+            <div class="search_result" style="margin-left:-5px">共<span>{{imgTotal}}</span>张图片</div>
+          </div>
+          <div class="imgList flexBox flexWrap" style="height: 660px" v-loading = 'imgListLoding'>
+            <a v-for='(item, index) in searchList' :key="index" :href="item.atlas_url" target="_blank"
+              class="flexBox flexMiddle">
+              <img :src="item.index_pic + '?imageView/0/h/210/w/288'" alt="item.alt" title="item.alt">
+              <div class="title">
+                <p>{{item.brief || item.photo_name}}</p>
+                <span>{{item.width}} x {{item.height}}</span>
+              </div>
+            </a>
+          </div>
+          <el-pagination hide-on-single-page @current-change="handleCurrentChange" :page-size="page_num"
+            :current-page.sync="page" layout="prev, pager, next, jumper" :total="Number(imgTotal)" background>
+          </el-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  new Vue({
+    el: '#app',
+    data() {
+      return {
+        showImg: false,
+        isLogin: false,
+        showUpload: false,
+        upCondition: false,
+        baseUrl: 'http://middle-api.plus.vinj.cn/api/',
+        columnList: [],
+        columnValue: '',
+        secondColumnList: [],
+        secondColumnValue: '',
+        isChina: '',
+        search_text: '',
+        timeOption: [{
+            value: '2',
+            label: '按上传时间'
+          },
+          {
+            value: '1',
+            label: '按发生时间'
+          }
+        ],
+        chinaOption: [{
+            value: 1,
+            label: '国内'
+          },
+          {
+            value: 0,
+            label: '国外'
+          }
+        ],
+        locationList: [],
+        shenValue: '',
+        cityList: [],
+        shiValue: '',
+        areaList: [],
+        quValue: '',
+        timeValue: '2',
+        startTime: '',
+        endTime: '',
+        order: 'desc',
+        goutuList: [],
+        searchList: [],
+        locationId: '',
+        page_num: 12,
+        page: 1,
+        imgTotal: '',
+        scroll: '',
+        imgListLoding: false,
+        columnDeep: '',
+        locationDeep: ''
+      }
+    },
+    methods: {
+      clearColumn(){
+        this.secondColumnValue = ''
+      },
+      clearChina(){
+        this.shenValue = ''
+        this.shiValue = ''
+        this.quValue = ''
+      },
+      clearShen() {
+        this.shiValue = ''
+        this.quValue = ''
+      },
+      clearShi() {
+        this.quValue = ''
+      },
+      getQueryString() {
+        var qs = (location.search.length > 0 ? location.search.substring(1) : ''),
+          args = {},
+          items = qs.length ? qs.split('&') : [],
+          item = null,
+          name = null,
+          value = null,
+          i = 0,
+          len = items.length;
+        for (i = 0; i < len; i++) {
+          item = items[i].split('=');
+          name = decodeURIComponent(item[0]);
+          value = decodeURIComponent(item[1]);
+          if (name.length) {
+            args[name] = value;
+          }
+        }
+        return args;
+      },
+      search() {
+        this.page = 1
+        this.getSearchData()
+      },
+      uploadSuccess(response) {
+        setTimeout(() => {
+          this.showImg = false
+          window.open("http://www.vinj.cn/folder108?pic_id=" + response.data.id)
+        }, 1000)
+        window.localStorage.setItem("file_host", response.data.file_out)
+      },
+      handleChange() {
+        this.showImg = true
+      },
+      uploadError() {
+        this.showImg = false
+        this.$message.error('上传失败，请重试');
+      },
+      changeCondition() {
+        this.upCondition = !this.upCondition
+      },
+      // 获取一级栏目数据
+      getColumnData() {
+        let params = {
+          site_id: 1,
+          type: 'sso'
+        }
+        axios.get(this.baseUrl + 'publish/column_list', {
+          params: params
+        }).then((res) => {
+          this.columnList = res.data.data
+        }).catch((err) => {})
+      },
+      // 获取二级栏目
+      getSecond(id) {
+        this.secondColumnValue = ''
+        this.columnDeep = this.columnValue
+        let params = {
+          father_id: this.columnValue,
+          site_id: 1
+        }
+        axios.get(this.baseUrl + 'publish/column_list', {
+          params: params
+        }).then((res) => {
+          this.secondColumnList = res.data.data
+        })
+      },
+      sColumnChange(id) {
+        this.secondColumnValue = id
+        this.columnDeep = this.columnValue +'_'+ id
+      },
+      getOrder(value) {
+        this.order = value
+      },
+      // 获取所在地 获取省
+      getLocation() {
+        axios.get(this.baseUrl + 'member/location').then((res) => {
+          this.locationList = res.data.data
+        }).catch((err) => {})
+      },
+      // 获取城市
+      getCity(id) {
+        this.shiValue = ''
+        this.quValue = ''
+        this.locationId = this.shenValue
+        let param = {
+          type: 'city',
+          fid: id
+        }
+        axios.get(this.baseUrl + 'member/location', {
+          params: param
+        }).then(res => {
+          if (res.data.ErrorCode === 0) {
+            this.cityList = res.data.data
+          }
+        })
+      },
+      // 获取区域 getArea
+      getArea(id) {
+        this.quValue = ''
+        this.locationId = this.shiValue
+        let param = {
+          type: 'area',
+          fid: id
+        }
+        axios.get(this.baseUrl + 'member/location', {
+          params: param
+        }).then(res => {
+          if (res.data.ErrorCode === 0) {
+            this.areaList = res.data.data
+          }
+        })
+      },
+      // 获取areaId
+      getAreaId(id) {
+        this.locationId = this.quValue
+      },
+      getStarTime() {
+        // console.log(this.startTime)
+      },
+      getEndTime() {
+        // console.log(this.endTime)
+      },
+      getGoutu(id) {
+        if (this.goutuList.indexOf(id) > -1) {
+          this.goutuList.splice(this.goutuList.indexOf(id), 1)
+        } else {
+          this.goutuList.push(id)
+        }
+      },
+      handleCurrentChange(val) {
+        this.page = val
+        this.searchList = []
+        this.getSearchData()
+      },
+      getSearchData(backup = false) {
+        this.imgListLoding = true
+        this.locationId = this.quValue || this.shiValue || this.shenValue
+        this.locationDeep = this.isChina ? `${this.shenValue}_${this.shiValue}_${this.quValue}`: ''
+        let param = {}
+        if (this.isLogin) {
+          param = {
+            china:  this.isChina,
+            search_text: this.search_text,
+            column_id: this.secondColumnValue || this.columnValue,
+            location_id: this.locationId,
+            start_time: this.startTime,
+            end_time: this.endTime,
+            order: this.order,
+            time_type: this.timeValue,
+            composition: this.goutuList.join(','),
+            page_num: this.page_num,
+            page: this.page,
+            locationDeep: this.locationDeep,
+            columnDeep: this.columnDeep
+          }
+        } else {
+          param = {
+            search_text: this.search_text,
+            page_num: this.page_num,
+            page: this.page
+          }
+        }
+        if (!backup) {
+          this.replaceUrl(param)
+        } else {
+          param = this.getQueryString()
+        }
+          // this.replaceUrl(param)
+        console.log(param)
+        axios.get(this.baseUrl + 'gallery/photo/common/search', {
+          params: param
+        }).then(res => {
+          if (res.data.error_code === 0) {
+            setTimeout(() => {
+              this.searchList = res.data.data.data
+              this.imgTotal = res.data.data.total
+              this.imgListLoding = false
+              document.documentElement.scrollTop = 0
+            }, 100)
+          }
+        })
+      },
+      setCookie(cName, value, expiredays) {
+        let exdate = new Date()
+        let cookiePath = '/'
+        let cookieDomain = '.vinj.cn'
+        exdate.setDate(exdate.getDate() + expiredays)
+        document.cookie = cName + '=' + escape(value) + ((expiredays == null) ? '' : ';expires=' + exdate
+          .toGMTString()) + ((cookiePath) ? ';path=' + cookiePath : '') + ((cookieDomain) ? ';domain=' +
+          cookieDomain : '')
+      },
+      replaceUrl(param) {
+        var new_url = 'http://10.0.14.228:5502/search_vue.html?'
+        for (let key in param) {
+          new_url += key + '=' + param[key] + '&'
+        }
+        window.history.pushState(null, null, new_url)
+      },
+      getCookie(name) {
+        let arr
+        let reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)')
+        arr = document.cookie.match(reg)
+        if (arr) {
+          return unescape(arr[2])
+        } else {
+          return null
+        }
+      },
+      getUrlData() {
+        let INPUT = this.getQueryString()
+        if (INPUT['search_text']) {
+            this.search_text = INPUT['search_text']
+          }
+          if (INPUT['page']) {
+            this.page = parseInt(INPUT['page'])
+          } else{
+            this.page = 1
+          }
+        if(!this.isLogin) {
+          return
+        }
+        if (INPUT['china']) {
+          this.isChina = parseInt(INPUT['china'])
+          if (!this.isChina) {
+            this.locationDeep = ''
+            this.shiValue = ''
+            this.quValue = ''
+            this.shenValue = ''
+          }
+        }
+        if (INPUT['column_id'] && INPUT['columnDeep']) {
+          this.columnDeep = INPUT['columnDeep']
+          let str = INPUT['columnDeep']
+          let arr = str.split('_')
+          if (arr[1]) {
+            this.columnValue = parseInt(arr[0])
+            this.getSecond(this.columnValue)
+            this.secondColumnValue = parseInt(arr[1])
+            this.columnDeep = this.columnValue +'_'+ this.secondColumnValue
+          } else {
+            this.columnValue = parseInt(arr[0])
+            this.getSecond(this.columnValue)
+            this.columnDeep = this.columnValue
+          }
+        } 
+        if (INPUT['location_id'] && INPUT['locationDeep']) {
+          this.quValue = INPUT['location_id']
+          this.locationDeep = INPUT['locationDeep']
+          let str = INPUT['locationDeep']
+          let arr = str.split('_')
+          if (arr[2] && arr[2]!==''){
+            this.shenValue = String(arr[0])
+            this.getCity(parseInt(arr[0]))
+            this.shiValue = String(arr[1])
+            this.getArea(parseInt(arr[1]))
+            this.quValue = String(arr[2])
+            this.locationDeep = `${this.shenValue}_${this.shiValue}_${this.quValue}`
+          } else if (arr[1] && arr[1]!==''){
+            this.shenValue = String(arr[0])
+            this.getCity(parseInt(arr[0]))
+            this.shiValue = String(arr[1])
+            this.getArea(parseInt(arr[1]))
+            this.quValue = ''
+            this.locationDeep = `${this.shenValue}_${this.shiValue}_${this.quValue}`
+          } else {
+            this.shenValue = String(arr[0])
+            this.getCity(parseInt(arr[0]))
+            this.shiValue = ''
+            this.quValue = ''
+            this.locationDeep = `${this.shenValue}_${this.shiValue}_${this.quValue}`
+          }
+        } 
+        if (INPUT['start_time']) {
+          this.startTime = INPUT['start_time']
+        }
+        if (INPUT['end_time']) {
+          this.endTime =INPUT['end_time']
+        }
+        if (INPUT['order']){
+          this.order = INPUT['order']
+        }
+        if (INPUT['time_type']) {
+          this.timeValue = INPUT['time_type']
+        }
+        if (INPUT['composition']) {
+          let arr = INPUT['composition'].split(',')
+          this.goutuList = []
+          arr.forEach(item => {
+            item = parseInt(item)
+            this.goutuList.push(item)
+          })
+        } else {
+          this.goutuList = []
+        }
+      },
+      goBack(){
+        console.log(111)
+        this.getSearchData(true)
+        this.getUrlData()
+      }
+    },
+    created() {
+      this.getColumnData()
+      this.getLocation()
+      if (document.getElementsByClassName('search')[0] && document.getElementsByClassName('search')[0].value) {
+        this.search_text = document.getElementsByClassName('search')[0].value
+      }
+      this.getUrlData()
+      this.getSearchData('true')
+      if (this.getCookie('accessToken')) {
+        this.isLogin = true
+      }
+    },
+    mounted() {
+      if (window.history && window.history.pushState) {
+        history.pushState(null, null, document.URL);
+        window.addEventListener('popstate', this.goBack, false);
+      }
+    }
+  })
+</script>
+
+</html>

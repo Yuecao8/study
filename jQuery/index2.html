@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <?php
+  	$formId = '';//表单id
+    $contentList= [];//活动介绍列表
+	$contentIndex = '';//当前文稿的index
+	$columnList = [];//栏目列表
+	$columnSign = '';//栏目标识
+  ?>
+  <!--{hoge:column column_id = "$column_id"}-->
+  <?php
+  	$formId = $__extend['xiuzanformid']??0;
+	$columnSign = substr(strrchr($_unique_sign, '/'), 1);
+	$download = $__extend['downloadUrl']??'';
+	$problemId = $__extend['problem_id']??0;
+  ?>
+  <!--{/hoge:column}-->
+
+
+  <!--{hoge:content_list column_id="917" return="r"}-->
+  <!--{hoge:content publish_id ="$_id" return="content"}-->
+  <?php
+    array_push($contentList,$content);       
+  ?>
+  <!--{/hoge:content}-->
+  <!--{/hoge:content_list}-->
+
+
+  <!--{hoge:column_list father_id = "915"}-->
+  <?php
+		array_push($columnList,$r);   
+      ?>
+  <!--{/hoge:column_list}-->
+  <!--{foreach  $columnList $index $item}-->
+  <?php 
+          if($item['id'] == $column_id){
+        	$contentIndex = $index;
+        }
+        ?>
+  <!--{/foreach}-->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1200, initial-scale=0.1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="{$TEMPLATE}css/reset.css">
+  <link rel="stylesheet" href="{$TEMPLATE}css/topic.css">
+  <link rel="stylesheet" href="{$TEMPLATE}css/toPage.css">
+  <script src="{{$TEMPLATE}}js/jquery_min.js"></script>
+  <script src="http://h5.plus.hebtv.com/formdata/js/xiuzanFormData<?php echo $formId?>.js"></script>
+  <script src="{{$TEMPLATE}}js/myXiuzanForm.sdk.js"></script>
+  <title>
+    <?php if(isset($contentList[$contentIndex]['title'])){
+                          echo $contentList[$contentIndex]['title'];
+                        } ?>
+  </title>
+  <link rel="stylesheet" href="{$TEMPLATE}css/videojs/video-js.min.css">
+  <script src="{{$TEMPLATE}}js/videojs/video.js"></script>
+  <script src="{{$TEMPLATE}}js/videojs/videojs-contrib-hls.min.js"></script>
+</head>
+
+<body>
+  <!--{hoge:column_list father_id = "915" exclude_column_id="917"}-->
+  <?php
+    	$vote_id = $__extend['vote_id']
+    ?>
+  <!--{/hoge:column_list}-->
+  <input type="hidden" name="vote_id" value="{$vote_id}" />
+  {include $TEMPLATE .'common/common-hd1'}
+  <div class="index">
+    <div class="header">
+      <div class="topBox flexBox flexMiddel">
+        <img src="{$TEMPLATE}/images/topic/banner-2x.png" alt="">
+      </div>
+      <div class="headerTab">
+        <ul class="flexBox flexBetween content">
+          <li><a href="http://www.plus.hebtv.com/special/wugeshi">首页</a></li>
+          <!--{hoge:column_list father_id = "915"}-->
+          <li>
+            <a href="{$_column_url}">{$_name}</a>
+          </li>
+          <!--{/hoge:column_list}-->
+        </ul>
+      </div>
+      <div class="classifyList content">
+        <ul>
+          <li class="classifyItem">
+            <div class="listHeader flexBox flexBetween">
+              <div class="left">
+                <img src="{$TEMPLATE}/images/topic/<?php echo $columnSign ?>.png" alt="">
+              </div>
+              <!-- <div class="right flexBox flexBetween">
+                                <div class="wycp">
+                                    <?php 
+                  	$columnList[$contentIndex]['column_url'] = strstr($columnList[$contentIndex]['column_url'],'?',1);
+                  ?>
+                                    <a href="{$columnList[$contentIndex]['column_url']}?wycp=1" style="display:block">
+                                        <img src="{$TEMPLATE}/images/topic/btn1-2x.png" alt="">
+                                    </a>
+                                </div>
+                                <div class="xzcpb">
+                                    <a href="{$download}" style="display:block">
+                                        <img src="{$TEMPLATE}images/topic/btn2-2x.png" alt="">
+                                    </a>
+                                </div>
+                            </div>-->
+            </div>
+            <div class="listCenter"
+              style="background:url(<?php echo$contentList[$contentIndex]['index_pic'] ?>) no-repeat top right;background-size: 40%;">
+              <?php echo $contentList[$contentIndex]['content'] ?>
+            </div>
+            <div class="listMore flexBox flexBetween">
+              <div class="moreLeft">
+                <span class="new" onclick="changeType(this)">
+                  <a href="javascript:void(0)">最新</a></span>
+                <span onclick="changeType(this)">
+                  <a href="javascript:void(0)">最热</a></span>
+              </div>
+              <!--<div class="moreRight">
+                                <span><a href="{$_column_url}" target="_blank">更多</a></span>
+                            </div>-->
+            </div>
+            <ul class="listBottom flexBox flexLeft" _sign="<?php echo $columnSign ?>"></ul>
+            <!--<div class="page" id="nw_pages">
+                            <div>
+                                共<span class="total"></span>条
+                                <span class="page_list01"></span> 共
+                                <span class="pageNum"></span>页
+                            </div>
+                        </div>-->
+            <div class="page-wrap" style="margin-top:40px;"></div>
+            <div class="voteDetail content"></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="xiuzanform<?php echo $formId?>" class="content form"></div>
+    <div class="footer">
+      <div class="footBox content">
+        <p>
+          <a title="河北广播电视台概况" href="http://www.hebtv.com/2013/1112/29475.shtml" target="_blank">河北广播电视台概况</a>|
+          <a title="关于我们" href="http://www.hebtv.com/2013/1112/29476.shtml" target="_blank">关于我们</a>|
+          <a title="联系我们" href="http://www.hebtv.com/2013/1112/29478.shtml" target="_blank">联系我们</a>|
+          <a title="招聘英才" href="http://www.hebtv.com/zhaopin/" target="_blank">招聘英才</a>|
+          <a title="广告招商" href="http://www.hebtv.com/Advertising_investme/" target="_blank">广告招商</a>|
+          <a title="服务承诺" href="http://www.hebtv.com/2013/1112/29484.shtml" target="_blank">服务承诺</a>|
+          <a title="版权声明" href="http://www.hebtv.com/2013/1112/29479.shtml" target="_blank">版权声明</a>|
+          <a title="友情链接" href="http://www.hebtv.com/friendlink/" target="_blank">友情链接</a>
+        </p>
+        <p>地址：中国河北省石家庄市建华南大街100号 邮编：050031</p>
+        <p>
+          冀ICP备13014932号 |
+          <a target="_blank" href="http://www.hebtv.com/2018/0531/422735.shtml"
+            style="display:inline-block;text-decoration:none;height:20px;line-height:20px;">
+            信息网络传播视听节目许可证0307211号
+          </a> |
+          <a href="http://www.hebtv.com/2019/0603/461093.shtml" target="_blank">互联网新闻信息服务许可证编号：13120180001</a>
+        </p>
+        <p>
+          <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=13010802000382"
+            style="display:inline-block;text-decoration:none;height:20px;line-height:20px;">
+            <img src="http://img.hebtv.com/templates/hebtv/img/style/jgw_gogo.png" style="float:left;"> 冀公网安备
+            13010802000382号
+          </a>|
+          <a target="_blank" href="http://www.hebtv.com/2013/1112/29478.shtml"
+            style="display:inline-block;text-decoration:none;height:20px;line-height:20px;">
+            侵权盗版投诉
+          </a>
+        </p>
+        <p>copyright © 2017 河北广播电视台版权所有，未经授权禁止复制或镜像</p>
+        <p>
+          <a href="http://www.cyberpolice.cn/wfjb/" target="_blank">
+        </p>
+      </div>
+      <input type="hidden" class="temp" value="{$TEMPLATE}">
+    </div>
+
+    <script>
+      var aid = < ? php echo $formId ? > ;
+      var myxiuzanform = new MyXiuzanForm({
+        formDom: 'xiuzanform' + aid,
+        formData: window['xiuzanFormData' + aid],
+        submitUrl: 'http://result.plus.hebtv.com/feedback/create',
+        //uploadUrl : 'http://mapi.plus.hebtv.com/api/v1/image/upload',
+        imgUploadUrl: 'http://mapi.plus.hebtv.com/api/v1/image/upload',
+        videoUploadUrl: 'http://mapi.plus.hebtv.com/api/v1/video/upload'
+      });
+      var problemId = < ? php echo $problemId ? > ;
+    </script>
+  </div>
+  <script src="{{$TEMPLATE}}js/common/toPage.js"></script>
+  <script src="{{$TEMPLATE}}js/topicList.js"></script>
+</body>
+
+</html>

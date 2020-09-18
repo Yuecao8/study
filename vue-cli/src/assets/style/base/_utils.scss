@@ -1,0 +1,167 @@
+.d-none {
+  display: none !important;
+}
+
+.d-inline {
+  display: inline !important;
+}
+
+.d-inline-block {
+  display: inline-block !important;
+}
+
+.d-block {
+  display: block !important;
+}
+
+.d-table {
+  display: table !important;
+}
+
+.d-table-cell {
+  display: table-cell !important;
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.d-inline-flex {
+  display: inline-flex !important;
+}
+
+.fl {
+  float: left !important;
+}
+
+.fr {
+  float: right !important;
+}
+
+.fn {
+  float: none !important;
+}
+
+.clearfix {
+  @include clearfix();
+}
+
+.text-truncate {
+  @include text-truncate();
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.vertical-middle {
+  display: inline-block;
+  vertical-align: middle;
+}
+// flex
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.direction-column{
+  flex-direction: column;
+}
+
+.flex-h-center {
+  display: flex;
+  justify-content: center;
+}
+
+.flex-v-center {
+  display: flex;
+  align-items: center;
+}
+
+.flex-no-grow {
+  flex-grow: 0;
+}
+
+.flex-no-shrink {
+  flex-shrink: 0;
+}
+
+.flex-one {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}
+
+.full-width {
+  width: 100% !important;
+}
+.flex-between{
+  display: flex;
+  justify-content: space-between;
+}
+.flex-around{
+  display: flex;
+  justify-content: space-around;
+}
+
+.full-height {
+  height: 100% !important;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.vertical-center {
+  @include vertical-center;
+}
+
+.us-none {
+  @include user-select(none);
+}
+
+.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.pre {
+  white-space: pre;
+}
+
+.round {
+  border-radius: 50%;
+}
+
+.pr {
+  position: relative;
+}
+
+.pa {
+  position: absolute;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}

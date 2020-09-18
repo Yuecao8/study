@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #container {
+            width: 400px;
+            min-height: 300px;
+            background-color: lightgreen;
+            margin: auto;
+            padding: 10px;
+            text-align: center;
+        }
+
+        li {
+            list-style: none;
+            text-align: left;
+        }
+    </style>
+    <!-- <script type="text/javascript" src="./js/jquery.min.js"></script> -->
+    <script type="text/javascript" src='./js/template.js'></script>
+
+    <script type="text/javascript">
+        var users = [{
+            ID: 'think8848',
+            Name: 'Joseph Chan',
+            Num: '1',
+            Status: 1
+        }, {
+            ID: 'aCloud',
+            Name: 'Mary Cheung',
+            Num: '2'
+        }];
+        document.getElementById("demo").tmpl(users).appendTo('#div_demo');
+    </script>
+</head>
+
+<body>
+    <div id="container">
+        <div id="div_demo"></div> 
+    </div>
+</body>
+<script id="demo" type="text/html">
+    <div style="margin-bottom:10px;">
+    　　<span>${ID}</span>
+    　　<span style="margin-left:10px;">{{= Name}}</span>
+    　　<span style="margin-left:10px;">${Number(Num)+1}</span>
+    　　<span style="margin-left:10px;">${Status}</span>
+    </div>
+</script>
+</html>

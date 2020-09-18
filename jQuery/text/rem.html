@@ -1,0 +1,138 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>仿百度图片瀑布流</title>
+<!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+<!-- <script src="http://yygame.duowan.com/Web/Public/Jcode/js/jquery.min.js"></script> -->
+<style>
+
+*{margin:0; padding:0;}
+#container{width: 1000px; border:1px solid #f00; margin:  50px auto; position: relative; }
+#container img{position: absolute;}
+#loader{width: 100%; height: 60px; background: url(loader.gif) no-repeat center; position: fixed; bottom: 0; left: 0;}
+</style>
+</head>
+<script type="text/javascript">
+$(function(){
+    var oContainer=$('#container');
+    var oLoader=$('#loader');
+    var iWidth=200;//列宽
+    var iSpace=10;//列数
+    var iOuterWidth=iWidth+iSpace;
+    var sUrl = 'http://www.wookmark.com/api/json/popular?callback=?';
+    var iCell=0;
+    var iPage=0;
+    var arrL=[];
+    var arrT=[];
+    var iBtn=true;
+
+
+    function setCells(){
+        iCell= Math.floor($(window).innerWidth()/iOuterWidth);
+        if(iCell < 3){
+            iCell =3;
+        }
+        if(iCell >6){
+            iCell =6;
+        }
+        oContainer.css('width',iOuterWidth*iCell-iSpace);
+    }
+    setCells();
+    for(var i=0;i < iCell; i++){
+        arrL.push(i*iOuterWidth);
+        arrT.push(0);
+    }
+
+    //console.log(arrL)
+    getData()
+    function getData(){
+        if(iBtn){
+            iBtn =false
+            oLoader.show();
+            $.getJSON(sUrl,'page='+iPage,function(data){
+                $.each(data,function(i,obj){
+                    var $img =$('<img>');
+                    $img.attr('src',obj.preview);
+                    var iHeight= iWidth /obj.width * obj.height;
+                    var index=getMin();
+                    $img.appendTo(oContainer);
+                    $img.css({width:iWidth,height: iHeight});
+                    $img.css({top:arrT[index],left: arrL[index]})
+                    arrT[index]+=iHeight +10;
+                    oLoader.hide();
+
+
+                })
+                iPage++;
+                iBtn=true;
+            })
+
+        }
+    }
+    $(window).on('resize',function(){
+        var iOldCell= iCell;
+        setCells();
+        var iH = $(window).scrollTop()+$(window).innerHeight();
+        var iMinIndex= getMin();
+        if(arrT[iMinIndex]+oContainer.offset().top < iH){
+
+            getData();
+        }
+        if(iOldCell == iCell) return ;
+        arrT=[];
+        arrL=[];
+        for(var i=0;i < iCell; i++){
+            arrL.push(i*iOuterWidth);
+            arrT.push(0);
+        }
+        var $img = oContainer.find('img');
+        $img.each(function(index,obj){
+            var index=getMin();
+            $(this).animate({top:arrT[index],left: arrL[index]})
+            arrT[index]+=$(this).height() +10;
+
+        })
+
+
+
+
+    })
+    $(window).on('scroll',function(){
+        var iH = $(window).scrollTop()+$(window).innerHeight();
+        var iMinIndex= getMin();
+        if(arrT[iMinIndex]+oContainer.offset().top < iH){
+
+            getData();
+        }
+    })
+
+    function getMin(){
+        var iv= arrT[0];
+        var _index=0;
+        for(var i=0; i<arrT.length; i++){
+            if(arrT[i] < iv){
+                iv= arrT[i];
+                _index=i;
+
+            }
+        }
+        return _index ;
+    }
+
+    
+})
+</script>
+<body>
+   <div id="top">仿百度图片瀑布流</div>
+   <!--标题 e -->
+   
+   <div id="container"></div>
+   <div id="loader"></div>
+   
+   <!--效果块 e -->
+   
+ 
+
+</body>
+</html>

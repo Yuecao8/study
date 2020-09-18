@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1300">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>搜索列表</title>
+	<link rel="icon" type="image/x-icon" sizes="16x16" href="{$TEMPLATE}images/logo3x.ico"/>
+    <link rel="stylesheet" href="{$TEMPLATE}css/base.css">
+     <link rel="stylesheet" href="{$TEMPLATE}css/font/iconfont.css">
+    <link rel="stylesheet" href="{$TEMPLATE}css/search_list.css">
+	<link rel="stylesheet" href="{$TEMPLATE}css/common_css/header.css">
+    <link rel="stylesheet" href="{$TEMPLATE}css/common_css/login.css">
+    <link rel="stylesheet" href="{$TEMPLATE}css/common_css/sign.css">
+    <link rel="stylesheet" href="{$TEMPLATE}css/common_css/share.css">
+    <link rel="stylesheet" href="{$TEMPLATE}css/common_css/footer.css">
+    <link rel="stylesheet" href="{$TEMPLATE}css/bootstrap.css">
+    <link rel="stylesheet" href="{$TEMPLATE}css/daterangepicker.css">
+    <script src="{{$TEMPLATE}}js/jquery.min.js"></script>
+	<script src="{{$TEMPLATE}}js/jquery.pagination.js"></script>
+	<script src="{{$TEMPLATE}}js/jquery.SuperSlide.2.1.3.js"></script>
+	<script src="{{$TEMPLATE}}js/tagSelect.js"></script>
+    <script src="{{$TEMPLATE}}js/moment.js"></script>
+    <script src="{{$TEMPLATE}}js/daterangepicker.js"></script>
+    <script  src="{{$TEMPLATE}}js/distpicker.js"></script>
+	
+	
+</head>
+
+<body>
+     <div class="back_top"><i class="iconfont">&#xe61e;</i></div>
+    <!---头部-->
+    {include $TEMPLATE .'common.header'}
+    <!---头部-->
+    <div class="search_result" style="padding-top:66px">
+
+        <div class="result">
+            <div class="containers">
+                <div class="bread_nav">
+                    <span>统计:</span> <span class="sum">共<span class="num"></span>个结果</span>
+                </div>
+                <div class="kind_box">
+                    <form action="">
+                        <div class="view_box pr">
+                            <span class="search_view">
+                              <input type="text" placeholder="搜索你喜欢的" name="" class="sou_like moren_show">
+                             </span>
+                            <span class="search_icon">
+                              <span class="icon_sear" style="cursor: pointer;"></span>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                <div class="filter">
+                    <div class="containers" >
+                        <div class="box">
+                            <dl class="column_first">
+                                <dt>分类:</dt>
+
+                            </dl>
+                            <dl class="column_two">
+                                <dt>时间:</dt>
+                                <dd style="display:flex;">
+                                 	<div class="time_child"  data-id="">全部</div>
+                                    <div class="time_child"  data-id="1">近7天</div>
+                                    <div class="time_child"  data-id="2">近30天</div>
+                                    <div class="time_child"  data-id="3">近90天</div>
+									<div class="time_child1 time_child">自定义</div>
+									 <div class="form-group" style="position: absolute;top: 0px;left: 355px;margin-left:0;display:none">
+                                        <div style="display:flex">
+                                            <input type="text"  name="date2" id="date2" class="form-control" style="width: 200px;margin-left: 45px;" value="日期选择">
+                                            <input type="hidden" id="startTime" name="startTime" class="form-control" />
+                                            <input type="hidden" id="endTime" name="endTime" class="form-control" />										
+                                            <button style="margin-left: 18px;" class="btn_time">查询</button>
+                                        </div>
+										
+                                   </div>
+                                </dd>
+	
+                            </dl>
+							
+							<dl class="column_three">
+                                <dt>排序:</dt>
+                                <dd style="display:flex;">
+									<div class="sx_child" data-id="">默认</div>
+                                    <div class="sx_child" data-id="1">正序</div>
+                                    <div class="sx_child" data-id="0">倒序</div>
+                                </dd>
+                            </dl>
+							<dl class="column_four">
+                                <dt>地区:</dt>
+                                <dd style="display:flex;">
+                                    <div class="locationAll" data-id="">全部</div>
+									<div class="locationAll" data-id="2">国外</div>
+									<div class="civil_bond locationAll" data-id="1">国内</div>
+									<!--<div data-toggle="distpicker" class="adress_picker">
+                                      <select  id="nj_province"></select>
+                                      <select  id="nj_city"></select>
+                                      <select  id="nj_street"></select>
+                                    </div> -->
+									<form action="" class="adress_picker" style="top: -10px;left: 240px;display:none">
+                                       <select name="pro" id="pro">
+                                          <option value="">请选择省份</option>
+                                       </select>
+                                       <select name="" id="city">
+                                          <option value="">请选择城市</option>
+                                       </select>
+                                       <select name="" id="con">
+                                          <option value="">请选择区域</option>
+                                       </select>
+									<span style="margin-left: 18px;cursor: pointer;" class="btn_location">查询</span>
+                                  </form>
+                                </dd>
+                            </dl>
+							<dl class="column_five">
+                                <dt>作者:</dt>
+                                <dd style="display:flex;">
+                                  <span style="margin-left: 20px;font-size: 14px;line-height: 20px;cursor: pointer;" class="addName">+</span>
+									<input type="text" autofocus placeholder="输入作者名称" style="margin-left: 20px;height: 30px;display: none;padding-left: 10px;" value="" class="userName">
+                                    <!-- <div class="searchUser" data_id = "">全部</div>
+                                    <div class="searchUser" data_id = "2">摄影师</div> -->
+                                </dd>
+                            </dl>
+							        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="result_box">
+            <div class="containers">
+                <!--混合 展示图片 -->
+                <div class="show_pic" id="show_pic">
+
+                </div>
+                <!--分页-->
+                <div class="page">
+
+                </div>
+                <!--分页  end-->
+
+            </div>
+        </div>
+    </div>
+    <?php
+    	if(@$_REQUEST['search_text']){
+          $search_text = @$_REQUEST['search_text'];
+        }
+    ?>
+      <input class="search" value="{$search_text}" type="hidden" />
+   
+	<!---底部和分享页面---->
+	{include $TEMPLATE ."common/share"}
+	{include $TEMPLATE ."common/footer"}
+	<!---底部和分享页面---->
+	<script type="text/babel">
+		var province = [];//省
+		var city = [];//城市
+		var country = [];//区域
+		var pid = "";//省id
+		var cid = "";//市id
+		var aid = "";//区域id
+		//获取区域信息 http://plus-middle-end.dev.hoge.cn/api/member/location
+		$.ajax({
+            url:"http://plus-middle-end.dev.hoge.cn/api/member/location",   // 请求的地址
+            type: "get", // 请求的类型（get post）
+            data: {},
+            dataType:"json", // 期望后端给你返回的数据类型
+            timeout: 5000, // 如果5秒之后，数据还没有回来，则请求超时
+            async: true, // 是否异步，默认为true（是异步）
+          	// 成功的回调
+            success: function(data) {
+              province = data.data
+              // 初始化省份，将省份添加到第一个下拉列表
+              $.each(province,function(index,val){
+                //创建 option
+                   var ops = $("<option value="+val.id+">"+val.name+"</option>")
+                 //添加省份
+                 $("#pro").append(ops)
+              });
+            }
+        });
+		//市区
+        //选择省份
+        $("#pro").change(function(){
+          //往市select 追加option
+          pid = $(this).val();//获取点击的对象（值
+          $.ajax({
+            url:"http://plus-middle-end.dev.hoge.cn/api/member/location",   // 请求的地址
+            type: "get", // 请求的类型（get post）
+            data: {
+              "fid": pid,
+              "type": "city"
+            },
+            dataType:"json", // 期望后端给你返回的数据类型
+            timeout: 5000, // 如果5秒之后，数据还没有回来，则请求超时
+            async: true, // 是否异步，默认为true（是异步）
+          	// 成功的回调
+            success: function(data) {
+              city = data.data;
+              $('.city').remove();  //先清除市
+              $(".con").remove()  //先删除市
+              //初始化市，将市添加到第二个下拉列表
+              $.each(city,function(index,val){
+                //创建 option
+                var ops = $("<option class='city' value="+val.id+">"+val.name+"</option>")
+                 //添加市
+                 $('#city').append(ops)
+              });
+            }
+          });
+		});
+		
+        //城区
+        //选择市
+        // 当市区发上变化（鼠标点击获取到我们想要的值）
+        $("#city").change(function(){
+          cid = $(this).val();//获取点击的对象（值）
+          $.ajax({
+            url:"http://plus-middle-end.dev.hoge.cn/api/member/location",   // 请求的地址
+            type: "get", // 请求的类型（get post）
+            data: {
+              "fid": cid,
+              "type": "area"
+            },
+            dataType:"json", // 期望后端给你返回的数据类型
+            timeout: 5000, // 如果5秒之后，数据还没有回来，则请求超时
+            async: true, // 是否异步，默认为true（是异步）
+          	// 成功的回调
+            success: function(data) {
+              country = data.data
+              $(".con").remove()  //先删除市
+
+              //初始化城，将城添加到第三个下拉列表
+              $.each(country,function(index,x){
+                //创建option
+                var ops = $("<option class='con ' value="+x.id+">"+x.name+"</option>")
+                //添加市
+                $("#con").append(ops)
+              })
+            }
+          })
+        });
+		$("#con").change(function(){
+        	aid = $(this).val();
+        })
+
+      //返回顶部
+     var oBtn = document.getElementsByClassName('back_top')[0];
+     var timer = null;
+      // 滚动滚动条，返回顶部按钮显示和隐藏
+        window.onscroll = function() {
+            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            if (scrollTop >= 666) {
+                oBtn.style.display='block';
+            } else {
+                oBtn.style.display='none';
+            }
+        };
+
+        oBtn.onclick = function() {
+            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            timer = setInterval(function() {
+                scrollTop -= 50;
+
+                document.documentElement.scrollTop = scrollTop; // 除谷歌之外的
+                document.body.scrollTop = scrollTop; // 谷歌浏览器
+                if (scrollTop <= 0) {
+                    clearInterval(timer);
+                }
+            }, 10);
+        };
+		 //双日历插件
+         $(function() {
+
+            //区间时间插件
+            $("input[name='date2']").daterangepicker({
+                // autoApply: true,
+                autoUpdateInput: false,
+                // alwaysShowCalendars: true,
+                ranges: {
+                    '今天': [moment(), moment()],
+                    '昨天': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    '近7天': [moment().subtract(7, 'days'), moment()],
+                    '这个月': [moment().startOf('month'), moment().endOf('month')],
+                    '上个月': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+                locale: {
+                    format: "YYYY/MM/DD",
+                    separator: " - ",
+                    applyLabel: "确认",
+                    cancelLabel: "清空",
+                    fromLabel: "开始时间",
+                    toLabel: "结束时间",
+                    customRangeLabel: "自定义",
+                    daysOfWeek: ["日", "一", "二", "三", "四", "五", "六"],
+                    monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"]
+                }
+            }).on('cancel.daterangepicker', function(ev, picker) {
+                $("#date2").val("请选择日期范围");
+                $("#startTime").val("");
+                $("#endTime").val("");
+            }).on('apply.daterangepicker', function(ev, picker) {
+                $("#startTime").val(picker.startDate.format('YYYY-MM-DD'));
+                $("#endTime").val(picker.endDate.format('YYYY-MM-DD'));
+                $("#date2").val(picker.startDate.format('YYYY-MM-DD') + " 至 " + picker.endDate.format('YYYY-MM-DD'));
+            });
+
+        });
+         //搜索
+         $(function() {
+          $("body").on("click", ".icon_sear", function() {
+			 search_text = $(".sou_like").val()
+              //var search_text = $(".sou_like").val();
+              /*if (search_text == "") {
+                  alert("请输入信息");
+                  return false;
+              }
+              //location.href = "http://www.vinj.cn/folder78?search_text=" + search_text;*/
+              seach_ajax($(".sou_like").val(),column_id,sx_newest,date_search,start_time,end_time,location_id,china,author);
+            
+          });
+      });
+            var morenzhi = $(".search").val();
+            // console.log(morenzhi);
+             $(".sou_like").val(morenzhi);
+
+          $('.sou_like').bind('keypress', function(event) {
+              if (event.keyCode == "13") {
+                  $(".icon_sear").click();
+                  return false;
+              }
+          })
+		//点击自定义时间和地址隐藏
+		$(".form-group").hide();
+		$(".time_child1").click(function(){
+		if($(".form-group").is(':hidden')){
+        	$(".form-group").show();
+          }else{
+           $(".form-group").hide();
+          }
+        })
+
+			
+		$(".adress_picker").hide();
+		$(".civil_bond").click(function(){
+		if($(".adress_picker").is(':hidden')){
+        	$(".adress_picker").show();
+          }else{
+           $(".adress_picker").hide();
+          }
+        })
+         
+		var search_text = $(".sou_like").val();//关键字
+		var column_id = "";//栏目id
+		var sx_newest = "";//排序
+		var date_search = "";//时间
+		var start_time = "";//自定义时间，开始时间
+		var end_time = "";//自定义时间，结束时间
+		var location_id ="";//地区id 
+		var china = "";//国内国外
+		var author = "";//作者
+		//获取作者名称
+        $(".addName").click(function() {
+          $(this).hide();
+          $(".userName").show()
+        });
+		// 失去焦点
+        $(".userName").blur(function(){
+          author = $(this).val();
+          $(".addName").show();
+          $(".userName").hide();
+          if (author.replace(/(^\s*)|(\s*$)/g, "")) {
+             $(".addName").html(author);
+          } else {
+          	$(".addName").html("+");
+          }
+          seach_ajax(search_text,'',sx_newest,'','','','','',author);
+        });
+		// 回车 作者搜索图片
+		$(".userName").keyup(function(){
+          if(event.keyCode == 13){
+            $(".userName").blur()
+          }
+        });
+		//排序搜索图片
+		$(".sx_child:first").addClass("act0");
+		var search_text=$(".search").val();
+		   $('.sx_child').click(function(){
+             sx_newest=$(this).data('id');
+             console.log(sx_newest)
+             $(this).addClass("act0").siblings().removeClass("act0");
+          	 seach_ajax(search_text,column_id,sx_newest,date_search,start_time,end_time,location_id,china,author);
+    	});
+		//栏目搜索
+		$(".col_child:first").addClass("act0");
+		$("body").delegate(".col_child", "click", function(event) {
+			column_id=$(this).data('id');
+          	$(".col_child").removeClass("act");      
+            $(this).addClass("act");
+            seach_ajax(search_text,column_id,sx_newest,date_search,start_time,end_time,location_id,china,author);
+		})
+		//时间搜索
+        $(".time_child:first").addClass("act0");
+	 	$("body").delegate(".time_child", "click", function(event){
+          	console.log(column_id)
+             date_search=$(this).data('id');    
+             $(this).addClass("act0").siblings().removeClass("act0");
+             seach_ajax(search_text,column_id,sx_newest,date_search,start_time,end_time,location_id,china,author);
+   		 });
+		//自定义时间搜索
+        $(".btn_time").click(function(){
+        	start_time=$("#startTime").val();
+          	end_time=$("#endTime").val();
+          	$(".time_child").removeClass("act0");  
+          	seach_ajax(search_text,column_id,sx_newest,date_search,start_time,end_time,location_id,china,author);
+        });
+		//地区搜索
+		$(".locationAll:first").addClass("act0");
+		$('.locationAll').click(function(){
+          console.log(search_text)
+             china=$(this).data('id');   
+             $(this).addClass("act0").siblings().removeClass("act0");
+          	 if (china != 1) {
+               $(".adress_picker").hide();
+             }
+          seach_ajax(search_text,column_id,sx_newest,date_search,start_time,end_time,location_id,china,author);
+    	});
+		// 国内选择区域
+		$(".btn_location").click(function(){
+          location_id = aid ? aid: (cid?cid: (pid? pid: ""))
+          seach_ajax(search_text,column_id,sx_newest,date_search,start_time,end_time,location_id,1,author);
+         });
+		var total_num='';
+		var num='';
+		seach_ajax($(".search").val(),'','','','','','','','');
+		//搜索接口方法 关键字、栏目id、排序、时间、自定义时间开始时间/结束时间、地区id、国内国外、作者
+		function seach_ajax(search_text,column_id,order,date_search,start_time,end_time,location_id,china,author){
+          $.ajax({
+            url:"http://middle-api.plus.vinj.cn/api/gallery/common/search",   // 请求的地址
+
+            type: "get", // 请求的类型（get post）
+            data: {
+              "search_text": search_text,
+              "column_id": column_id,
+              "order": order?'asc':'desc',
+              // 1表示国内，且传最里层location_id  0是国外
+              "china": china,
+              "location_id": china?location_id: "",
+              "per_num": 40,
+              "date_search": start_time? "":date_search,
+              "start_time": start_time,
+              "end_time": end_time,
+              "author": author,
+              "act_id": 1
+            },
+              dataType:"json", // 期望后端给你返回的数据类型
+              timeout: 5000, // 如果5秒之后，数据还没有回来，则请求超时
+              async: true, // 是否异步，默认为true（是异步）
+              // 成功的回调
+              success: function(data) {
+                //console.log(data)
+             
+                var search_img=[];
+                var gallery_id=[];
+              	var sl_gaosi_arr = [];
+             	$(".show_pic").empty();
+             
+              num=data.data.total;
+              $(".num").text(num);
+              if (num==0){
+              	$(".show_pic").append(`
+                  <div class="search_box" style="background: #fff;width: 100%;text-align: center;padding-top: 80px;">
+                  未搜到匹配的结果
+                  </div>`)
+                $(".page").hide()
+              } else {
+              $.each(data.data.data,function(index,item){
+             
+                	var search_main=item.index_pic.split('/');                   
+                    //var search_arr=search_main.splice(3,0,'293x210');                      
+                    var search_arr2=search_main.join('/'); 
+                    var index_pic_gaosi = item.index_pic.split('/');
+                    index_pic_gaosi.splice(3, 0, '5x');
+                    var gaosi = index_pic_gaosi.join('/');
+                    sl_gaosi_arr.push(gaosi);
+                    search_img.push(search_arr2);
+                    gallery_id.push(item.id);                                     
+                	$(".show_pic").append(`
+						<div class="search_box" data-id="${gallery_id[index]}" style="display: flex;justify-content: center;align-items: center;background: #000;">
+                          <a href="javascript:void">
+                          <img  data-src="${search_img[index]}" src="${sl_gaosi_arr[index]}" alt="" width="293px" max-height="100%" oncontextmenu="return false;" ondragstart="return false;"></a>
+                    	</div>`)
+                		lazyRender();
+              		})
+              }
+              total_num=Math.ceil(data.data.total/40); 
+              $('.page').pagination({
+					pageCount: total_num,
+					coping: true,
+					homePage: '首页',
+					endPage: '末页',
+					prevContent: '上页',
+					nextContent: '下页',
+					current: 1,
+					callback: function(api) {
+						$.ajax({
+							url:"http://middle-api.plus.vinj.cn/api/gallery/common/search",
+							type: 'get',
+							data: {
+								"page": api.getCurrent(),
+                              	"search_text":search_text,
+                 				
+              	  				"per_num":40,
+							},
+                          	
+							success: function(data) {
+							
+							$(".show_pic").text("");
+                            search_img=[];
+                            gallery_id=[];
+							$.each(data.data.data,function(index,item){
+                                var search_two_main=item.index_pic.split('/');                   
+                                //var search_two_arr=search_two_main.splice(3,0,'293x210');                      
+                                var search_two_arr2=search_two_main.join('/'); 
+              		            search_img.push(search_two_arr2);
+                                gallery_id.push(item.id);
+                                $(".show_pic").append(`<div class="search_box" data-id="${gallery_id[index]}" style="display: flex;justify-content: center;align-items: center;background: #000;">
+                                <a href="javascript:void"><img  data-src="${search_img[index]}" src="${sl_gaosi_arr[index]}" alt="" width="293" max-height="100%" oncontextmenu="return false;" ondragstart="return false;"></a>
+                                </div>`)
+
+                                })	
+								 $('body,html').animate({scrollTop:320},100)
+							},
+							error: function() {
+								alert("没有找到对应结果！");
+							}
+						})
+					}
+				});
+
+            }, 
+          	// 失败回调
+            error: function(err) {
+
+            }, 
+        })  
+          
+        }
+          
+		$(".show_pic").delegate(".search_box", "click", function(event) {
+				var cid = $(this).attr("data-id");
+				window.open('http://www.vinj.cn/folder77?id=' + cid);
+		})
+		//获取栏目
+			var column_title=[];
+			var columnList=[];
+            $.ajax({
+                    url: "http://mapi.plus.vinj.cn/api/open/middle/column_list?appid=m2oiacrr7knlqi869e&appkey=02523699ba0579628a1dc8d16defa699",
+
+                    type: 'get', // 请求的类型（get post）
+                    data: {
+                    	
+                    },
+                    dataType: "json", // 期望后端给你返回的数据类型
+                    timeout: 5000, // 如果5秒之后，数据还没有回来，则请求超时
+                    async: true, // 是否异步，默认为true（是异步）
+                    success: function(data) {
+              				 $(".column_first").append(`
+                                 <dd>
+                                    <div  data-id=""   class="col_child act" style="cursor: pointer;margin-left:20px">全部</div>
+                                 </dd>
+                                   `);
+                            
+                      		$.each(data.data,function(index,item){
+                            column_title.push(item.name);
+                            columnList.push(item.id);
+                            
+                             $(".column_first").append(`
+                                 <dd style="cursor: pointer;">
+                                    <div   data-id="${columnList[index]}" style="cursor: pointer;"  class="col_child">${column_title[index]}</div>
+                                 </dd>
+                                   `);
+                            
+                            })
+                          
+                      
+                    }, // 成功的回调
+
+                    error: function(err) {
+
+                    }, // 失败回调
+                })
+               // 先进行一次检查
+          lazyRender();
+          //为了不在滚轮滚动过程中就一直判定，设置个setTimeout,等停止滚动后再去判定是否出现在视野中。
+          var clock; //这里的clock为timeID， 返回一个 ID（数字），可以将这个ID传递给 clearTimeout() 来取消执行。
+          $(window).on('scroll', function() {
+              //        lazyRender();
+              if (clock) { //只要在300毫秒内触发滚动事件，都会被clearTimeout掉，setTimeout不会执行。
+                  //如果有300毫秒外的操作，会得到一个新的timeID即clock，会执行一次setTimeout,然后保存这次setTimeout的ID，
+                  //对于300毫秒内的scroll事件，不会生成新的timeID值，所以会一直被clearTimeout掉，不会执行setTimeout.
+
+                  clearTimeout(clock);
+                  // console.log(clock, 1111);
+              }
+
+              clock = setTimeout(function() {
+                 
+                  lazyRender();
+              }, 300)
+          });
+          //懒加载
+          function lazyRender() {
+              $('.show_pic img').each(function() {
+                  if (checkShow($(this)) && !isLoaded($(this))) {
+                      loadImg($(this));
+                  }
+              })
+
+          }
+
+          function checkShow($img) { // 传入一个img的jq对象 
+              var scrollTop = $(window).scrollTop(); //即页面向上滚动的距离 
+              var windowHeight = $(window).height(); // 浏览器自身的高度
+              var offsetTop = $img.offset().top; //目标标签img相对于document顶部的位置 
+              if (offsetTop < (scrollTop + windowHeight) && offsetTop > scrollTop) { //在2个临界状态之间的就为出现在视野中的 
+                  return true;
+              }
+              return false;
+          }
+
+          function isLoaded($img) {
+              return $img.attr('data-src') === $img.attr('src'); //如果data-src和src相等那么就是已经加载过了 
+          }
+
+          function loadImg($img) {
+              $img.attr('src', $img.attr('data-src')); // 加载就是把自定义属性中存放的真实的src地址赋给src属性 
+          }
+    </script> 
+	<script src="{{$TEMPLATE}}js/browser.min.js"></script>
+</body>
+
+</html>

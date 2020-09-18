@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  // let json = {
+  //   a: '测试'
+  // }
+
+  // function fun({a,b = '1'}) {
+  //   console.log(a, b);//测试 1
+  // }
+  // fun(json);
+
+
+  // let obj={
+  //   a:'啊',
+  //   c: '照片详情',
+  //   b:'哦'
+  // }
+  // console.log('d' in obj);  //false
+
+
+  // let arr = ['1', '2', '3'];
+
+  // function fun(a, b, c) {
+  //   console.log(a, b, c);
+  // }
+
+  // fun(...arr);
+
+
+  // let arr=['喜欢','毛不易'];
+  // console.log(0 in arr);  // true
+
+  // console.log("let arr=['毛不易','是', '', '小可爱']")
+  // console.log('------forEach遍历数组------')
+  // let arr=['毛不易','是', '', '小可爱'];
+  // arr.forEach((val,index)=>console.log(index,val));
+  // console.log('-----filter遍历数组--------')
+  // arr.filter((val,index)=>console.log(index,val));
+  // console.log('-----some遍历数组--------')
+  // arr.some((val,index)=>console.log(index,val));
+  // console.log('-----map遍历数组--------')
+  // arr.map((val,index)=>console.log(index,val))
+  // console.log('-----map替换数组--------')
+  // console.log(arr.map(x=>'花花'));
+  // console.log("-----数组转换为字符串------");
+  // console.log(arr.join('|'), '//自定义字符');
+  // console.log(arr.toString(),'//字符为,');
+
+
+  // 对象赋值
+  // let nickname = "花花";
+  // let name = '华晨宇';
+  // var obj = {
+  //   nickname,
+  //   name
+  // };
+  // console.log(obj); // {nickname: "花花", name: "华晨宇"}
+
+
+
+  let key = 'nickname';
+  var obj = {
+    [key]: '花花',
+    name: '华晨宇'
+  }
+  console.log(obj.nickname); //花花
+  console.log(obj.name); //华晨宇
+  
+</script>
+
+</html>

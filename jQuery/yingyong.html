@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    let a = [1,2,3,4];
+    let b = [1,2,3,4];
+    let c = [1,2,3,4];
+    let d = [1,2,3,4];
+    let e = [1,2,3,4];
+    let newA = [];
+
+    a.forEach(item => {
+        if (item > 2){
+            newA.push(item)
+        }
+    })
+    console.log(newA, a);
+
+    let newB = b.map(item => {
+        if (item > 2){
+            return item
+        }
+    })
+    console.log(newB, b);
+
+    let newC = c.filter(item => {
+        if (item > 2){
+            return item
+        }
+    })
+    console.log(newC, c)
+
+    let D= d.every(item => {
+        return item > 2
+    })
+    console.log(D, d)
+
+    let E = e.some(item => {
+        return item > 2
+    })
+    console.log(E, e)
+
+    let q = (function (x){
+        // delete x;
+        console.log(delete x);
+        return x;
+    })(0)
+    console.log(q)
+</script>
+</html>

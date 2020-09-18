@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1300">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>搜索列表</title>
+	<link rel="icon" type="image/x-icon" sizes="16x16" href="{$TEMPLATE}images/logo3x.ico"/>
+    <link rel="stylesheet" href="{$TEMPLATE}css/base.css">
+     <link rel="stylesheet" href="{$TEMPLATE}css/font/iconfont.css">
+    <link rel="stylesheet" href="{$TEMPLATE}css/search_list.css?v=1">
+	<link rel="stylesheet" href="{$TEMPLATE}css/common_css/header.css">
+    <link rel="stylesheet" href="{$TEMPLATE}css/common_css/login.css">
+    <link rel="stylesheet" href="{$TEMPLATE}css/common_css/sign.css">
+    <link rel="stylesheet" href="{$TEMPLATE}css/common_css/share.css">
+    <link rel="stylesheet" href="{$TEMPLATE}css/common_css/footer.css">
+   <!-- <link rel="stylesheet" href="{$TEMPLATE}css/bootstrap.css"> -->
+    <link rel="stylesheet" href="{$TEMPLATE}css/daterangepicker.css">
+    <script src="{{$TEMPLATE}}js/jquery.min.js"></script>
+	<script src="{{$TEMPLATE}}js/jquery.pagination.js"></script>
+	<script src="{{$TEMPLATE}}js/jquery.SuperSlide.2.1.3.js"></script>
+	<script src="{{$TEMPLATE}}js/tagSelect.js"></script>
+    <script src="{{$TEMPLATE}}js/moment.js"></script>
+    <script src="{{$TEMPLATE}}js/daterangepicker.js"></script>
+    <script  src="{{$TEMPLATE}}js/distpicker.js"></script>
+	<!--<script src="{{$TEMPLATE}}js/iboot.js"></script>-->
+	<style>
+      
+    	.back_top{
+           width: 46px;
+           height: 44px;
+           position:fixed;
+           bottom:40px;
+           right:30px;
+           background-color: #ccc;
+           border-radius: 2px;
+           cursor: pointer;
+           text-align: center;
+           line-height: 44px;
+           transition: background 0.5s;
+            -moz-transition: background 0.5s;
+            -webkit-transition: background 0.5s;
+            -o-transition: background 0.5s;
+            display:none;
+            z-index: 666;
+         }  
+        .back_top i{
+          font-size:26px;
+          color:#fff;
+        }
+       .back_top:hover{
+          background-color:#DD2F3C;   
+        } 
+	[v-cloak]{
+    	display: none
+    }
+	.searchBox .search_contain .el-pagination {
+        margin-top: 70px;
+        margin-left: 440px;
+        margin-bottom: 122px;
+        font-size: 14px;
+        font-family: PingFangSC;
+        font-weight: 400;
+        color: #666666;
+        line-height: 20px;
+        letter-spacing: 1px;
+      }
+      .searchBox .search_contain .el-pagination .el-pager li {
+        background: unset;
+        width: 40px;
+        line-height: 40px;
+        height: 40px;
+      }
+      .searchBox .search_contain .el-pagination .el-pager li:hover {
+        color: #e2313d;
+      }
+      .searchBox .search_contain .el-pagination .btn-prev,
+      .searchBox .search_contain .el-pagination .btn-next,
+      .searchBox .search_contain .el-pagination .el-pagination__jump {
+        background: unset;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+      }
+      .searchBox .search_contain .el-pagination .el-pager li.active {
+        background: #e2313d;
+        color: #fff;
+      }
+	  .searchBox .search_contain .el-pagination .btn-prev span,
+      .searchBox .search_contain .el-pagination .btn-next span{
+      	line-height: 40px
+      }
+      .articeSearch{
+          //display: none;
+      }
+    </style>
+	
+</head>
+
+<body>
+    <div class="back_top"><i class="iconfont">&#xe61e;</i></div>
+    <!---头部-->
+    {include $TEMPLATE .'common.header'}
+   	<!--中间-->
+     <div id="app">
+      <div class="searchBox">
+        <div class="search_head container">
+          <div class="search_key flexBox flexLeft">
+            <div class="search_input flexBox flexBetween">
+              <input type="text" value="" id="keywords" v-model='search_text' @keyup.enter="search()">
+              <el-upload v-if='isLogin' class="upload-demo flexBox flexAlign" name='image' :show-file-list='false'
+                :multiple='false' :on-success='uploadSuccess' :on-change='handleChange' :on-error='uploadError'
+                action="http://middle-api.plus.vinj.cn/api/gallery/photos/upload">
+                <i class="cameraIcon" style="margin-right: 12px" v-loading='showImg'></i>
+              </el-upload>
+              <!-- <div class="cameraIcon flexBox flexAlign" style="height: 44px;margin-right: 12px"
+              v-if ='isLogin'
+              @click="showUpload = true"></div> -->
+            </div>
+            <div class="search_btn flexBox flexAlign flexBetween">
+              <span class="img_btn" @click = 'search()'>搜索</span>
+              <div class="articeSearch flexBox flexAlign" v-if='isLogin' @click="changeCondition">
+                <span>展开高级搜索</span>
+                <span :class="upCondition?'upIcon':'downIcon'"></span>
+              </div>
+            </div>
+          </div>
+          <div class="search_condition" v-if="isLogin && upCondition" v-cloak>
+            <div class="condition">
+              <span class="title">栏目：</span>
+              <el-select v-model="columnValue" clearable placeholder="请选择">
+                <el-option v-for="item in columnList" :key="item.id" :label="item.name" :value="item.id"
+                  @click.native='getSecond(item.id)'>
+                </el-option>
+              </el-select>
+              <el-select v-model="secondColumnValue" clearable placeholder="请选择">
+                <el-option v-for="item in secondColumnList" :key="item.id" :label="item.name" :value="item.id"
+                  @click.native='sColumnChange(item.id)'>
+                </el-option>
+              </el-select>
+            </div>
+            <div class="condition">
+              <span class="title">地点：</span>
+              <el-select v-model="isChina" clearable placeholder="请选择">
+                <el-option v-for="item in chinaOption" :key="item.value" :label="item.label" :value="item.value">
+                </el-option>
+              </el-select>
+              <div v-show='isChina === 1' style="display: inline-block;">
+                <el-select v-model="shenValue" clearable placeholder="请选择省" >
+                  <el-option v-for="item in locationList" :key="item.id" :label="item.name" :value="item.id"
+                    @click.native='getCity(item.id)'>
+                  </el-option>
+                </el-select>
+                <el-select v-model="shiValue" clearable placeholder="请选择市">
+                  <el-option v-for="item in cityList" :key="item.id" :label="item.name" :value="item.id"
+                    @click.native='getArea(item.id)'>
+                  </el-option>
+                </el-select>
+                <el-select v-model="quValue" clearable placeholder="请选择区">
+                  <el-option v-for="item in areaList" :key="item.id" :label="item.name" :value="item.id"
+                    @click.native='getAreaId(item.id)'>
+                  </el-option>
+                </el-select>
+              </div>
+            </div>
+            <div class="condition">
+              <span class="title">时间：</span>
+              <el-select v-model="timeValue" clearable placeholder="按上传时间">
+                <el-option v-for="item in timeOption" :key="item.value" :label="item.label" :value="item.value">
+                </el-option>
+              </el-select>
+              <span class="text">从</span>
+              <el-date-picker v-model="startTime" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"
+                @change='getStarTime' ></el-date-picker>
+              <span class="text">到</span>
+              <el-date-picker v-model="endTime" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"
+                @change='getEndTime'></el-date-picker>
+              <span :class="[{'active': order==='asc'},'paixu']" @click="getOrder('asc')">正序</span>
+              <span :class="[{'active': order==='desc'},'paixu']" @click="getOrder('desc')">倒序</span>
+            </div>
+            <div class="condition flexBox flexLeft flexAlign">
+              <span class="title">构图：</span>
+              <div class="goutuBox flexBox flexLeft">
+                <div :class="[{'active': goutuList.indexOf(2) > -1},'iconBox','flexBox','flexAlign']"
+                  @click="getGoutu(2)">
+                  <i class="hengtuIcon"></i>
+                  <span>横图</span>
+                </div>
+                <div :class="[{'active': goutuList.indexOf(3) > -1},'iconBox','flexBox','flexAlign']"
+                  @click="getGoutu(3)">
+                  <i class="shutuIcon"></i>
+                  <span>竖图</span>
+                </div>
+                <div :class="[{'active': goutuList.indexOf(1) > -1},'iconBox','flexBox','flexAlign']"
+                  @click="getGoutu(1)">
+                  <i class="fangtuIcon"></i>
+                  <span>方图</span>
+                </div>
+              </div>
+            </div>
+            <div class="search_btn">
+              <span class="img_btn" style="padding: 6px 15px;" @click = 'search()'>搜索</span>
+            </div>
+          </div>
+        </div>
+        <div class="search_contain"  v-cloak>
+          <div class="container">
+            <div class="search_source flexBox flexLeft flexAlign" v-if="imgTotal>0 || imgTotal===0">
+              <span class="sourcename">搜索结果：</span>
+              <div class="search_result" style="margin-left:-5px">共 <span v-text = 'imgTotal'></span> 张图片</div>
+            </div>
+			<div class="imgList flexBox flexWrap" v-if="imgTotal>0">
+              <a v-for = '(item, index) in searchList' :key="index" :href="item.atlas_url" target="_blank" class="flexBox flexMiddle">
+                <img :src="item.index_pic + '?imageView/0/w/420'" :alt="item.brief" :title="item.brief">
+                <div class="title">
+                  <p v-text='item.brief'></p>
+                  <span v-text="item.width"></span><span>x</span><span v-text="item.height"></span>
+                </div>
+              </a>
+            </div>
+			<div class="imgList" v-cloak v-else>
+                    <div class="flexBox flexCenter" style="width: 100%; padding-top: 150px">
+                      <div class="" style="width: 190px; height: 163px;">
+                        <img src="{{$TEMPLATE}}images/nodata.png" alt="" style="max-width: 100%;max-height: 100%;">
+                        <!--<p style="text-align: center;margin-top: 10px;">暂无更多数据</p>-->
+                      </div>
+                    </div>
+           	</div>
+            <el-pagination
+			  prev-text = "上页"
+			  next-text = "下页"
+              hide-on-single-page
+			  :current-page.sync="page"
+              @current-change="handleCurrentChange"
+              :page-size="page_num"
+              layout="prev, pager, next, jumper"
+              :total="Number(imgTotal)"
+              background>
+            </el-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+    <?php
+    	if(@$_REQUEST['search_text']){
+          $search_text = @$_REQUEST['search_text'];
+        }
+    ?>
+      <input class="search" value="{$search_text}" type="hidden" />
+   
+	<!---底部和分享页面---->
+	{include $TEMPLATE ."common/share"}
+	{include $TEMPLATE ."common/footer"}
+	<!---底部和分享页面---->
+	<link rel="stylesheet" href="{$TEMPLATE}css/element.css">
+    <script src="{{$TEMPLATE}}js/axios.js"></script>
+  	<script src="{{$TEMPLATE}}js/vue.js"></script>
+  	<script src="{{$TEMPLATE}}js/element.js"></script>
+    <script>
+  new Vue({
+    el: '#app',
+    data() {
+      return {
+        showImg: false,
+        isLogin: false,
+        showUpload: false,
+        upCondition: false,
+        baseUrl: 'http://middle-api.plus.vinj.cn/api/',
+        columnList: [],
+        columnValue: '',
+        secondColumnList: [],
+        secondColumnValue: '',
+        isChina: '',
+        search_text: '',
+        timeOption: [{
+            value: '2',
+            label: '按上传时间'
+          },
+          {
+            value: '1',
+            label: '按发生时间'
+          }
+        ],
+        chinaOption: [{
+            value: 1,
+            label: '国内'
+          },
+          {
+            value: 0,
+            label: '国外'
+          }
+        ],
+        locationList: [],
+        shenValue: '',
+        cityList: [],
+        shiValue: '',
+        areaList: [],
+        quValue: '',
+        timeValue: '2',
+        startTime: '',
+        endTime: '',
+        order: 'desc',
+        goutuList: [],
+        searchList: [],
+        locationId: '',
+        page_num: 12,
+        page: 1,
+        imgTotal: '',
+        scroll: '',
+        imgListLoding: false
+      }
+    },
+    methods: {
+      getQueryString() {
+        var qs = (location.search.length > 0 ? location.search.substring(1) : ''),
+          args = {},
+          items = qs.length ? qs.split('&') : [],
+          item = null,
+          name = null,
+          value = null,
+          i = 0,
+          len = items.length;
+        for (i = 0; i < len; i++) {
+          item = items[i].split('=');
+          name = decodeURIComponent(item[0]);
+          value = decodeURIComponent(item[1]);
+          if (name.length) {
+            args[name] = value;
+          }
+        }
+        return args;
+      },
+      search() {
+        this.page = 1
+        console.log(this.page)
+        this.getSearchData()
+      },
+      uploadSuccess(response) {
+        setTimeout(() => {
+          this.showImg = false
+          window.open("http://www.vinj.cn/folder108?pic_id=" + response.data.id)
+        }, 1000)
+        window.localStorage.setItem("file_host", response.data.file_out)
+      },
+      handleChange() {
+        this.showImg = true
+      },
+      uploadError() {
+        this.showImg = false
+        this.$message.error('上传失败，请重试');
+      },
+      changeCondition() {
+        this.upCondition = !this.upCondition
+      },
+      // 获取一级栏目数据
+      getColumnData() {
+        let params = {
+          site_id: 1,
+          type: 'sso'
+        }
+        axios.get(this.baseUrl + 'publish/column_list', {
+          params: params
+        }).then((res) => {
+          this.columnList = res.data.data
+        }).catch((err) => {})
+      },
+      // 获取二级栏目
+      getSecond() {
+        this.secondColumnValue = ''
+        let params = {
+          father_id: this.columnValue,
+          site_id: 1
+        }
+        axios.get(this.baseUrl + 'publish/column_list', {
+          params: params
+        }).then((res) => {
+          this.secondColumnList = res.data.data
+        })
+      },
+      sColumnChange() {
+        console.log(this.secondColumnValue)
+      },
+      getOrder(value) {
+        this.order = value
+      },
+      // 获取所在地 获取省
+      getLocation() {
+        axios.get(this.baseUrl + 'member/location').then((res) => {
+          this.locationList = res.data.data
+        }).catch((err) => {})
+      },
+      // 获取城市
+      getCity(id) {
+        this.shiValue = ''
+        this.quValue = ''
+        this.locationId = this.shenValue
+        let param = {
+          type: 'city',
+          fid: id
+        }
+        axios.get(this.baseUrl + 'member/location', {
+          params: param
+        }).then(res => {
+          if (res.data.ErrorCode === 0) {
+            this.cityList = res.data.data
+          }
+        })
+      },
+      // 获取区域 getArea
+      getArea(id) {
+        this.quValue = ''
+        this.locationId = this.shiValue
+        let param = {
+          type: 'area',
+          fid: id
+        }
+        axios.get(this.baseUrl + 'member/location', {
+          params: param
+        }).then(res => {
+          if (res.data.ErrorCode === 0) {
+            this.areaList = res.data.data
+          }
+        })
+      },
+      // 获取areaId
+      getAreaId(id) {
+        this.locationId = this.quValue
+        console.log(id)
+      },
+      getStarTime() {
+        console.log(this.startTime)
+      },
+      getEndTime() {
+        console.log(this.endTime)
+      },
+      getGoutu(id) {
+        if (this.goutuList.indexOf(id) > -1) {
+          this.goutuList.splice(this.goutuList.indexOf(id), 1)
+        } else {
+          this.goutuList.push(id)
+        }
+      },
+      handleCurrentChange(val) {
+        this.page = val
+        this.getSearchData()
+      },
+      getSearchData(backup = false) {
+        this.searchList = []
+        this.imgTotal = 0
+        this.imgListLoding = true
+        this.locationId = this.quValue || this.shiValue || this.shenValue
+        let param = {
+          china: this.isChina,
+          search_text: this.search_text,
+          column_id: this.secondColumnValue || this.columnValue,
+          location_id: this.locationId,
+          start_time: this.startTime,
+          end_time: this.endTime,
+          order: this.order,
+          time_type: this.timeValue,
+          composition: this.goutuList.join(','),
+          page_num: this.page_num,
+          page: this.page
+        }
+        if (!backup) {
+          this.replaceUrl(param)
+        } else {
+          param = this.getQueryString()
+        }
+        axios.get(this.baseUrl + 'gallery/photo/common/search', {
+          params: param
+        }).then(res => {
+          if (res.data.error_code === 0) {
+            this.searchList = res.data.data.data
+            this.imgTotal = res.data.data.total
+            this.imgListLoding = false
+          }
+        })
+      },
+      setCookie(cName, value, expiredays) {
+        let exdate = new Date()
+        let cookiePath = '/'
+        let cookieDomain = '.vinj.cn'
+        exdate.setDate(exdate.getDate() + expiredays)
+        document.cookie = cName + '=' + escape(value) + ((expiredays == null) ? '' : ';expires=' + exdate
+          .toGMTString()) + ((cookiePath) ? ';path=' + cookiePath : '') + ((cookieDomain) ? ';domain=' +
+          cookieDomain : '')
+      },
+      replaceUrl(param) {
+        var new_url = 'http://www.vinj.cn/folder78?'
+        for (let key in param) {
+          new_url += key + '=' + param[key] + '&'
+        }
+        window.history.pushState(null, null, new_url)
+      },
+      getCookie(name) {
+        let arr
+        let reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)')
+        arr = document.cookie.match(reg)
+        if (arr) {
+          return unescape(arr[2])
+        } else {
+          return null
+        }
+      },
+      goBack() {
+        let INPUT = this.getQueryString()
+        this.isChina = INPUT['china']
+        this.search_text = INPUT['search_text']
+        if (this.secondColumnValue) {
+          this.secondColumnValue = INPUT['column_id']
+        } else {
+          this.columnValue = INPUT['column_id']
+        }
+        this.locationId = INPUT['location_id']
+        this.startTime = INPUT['start_time']
+        this.endTime = INPUT['end_time']
+        this.order = INPUT['order']
+        this.timeValue = INPUT['time_type']
+        let arr = INPUT['composition'].split(',')
+        this.goutuList = []
+        arr.forEach(item => {
+          item = parseInt(item)
+          this.goutuList.push(item)
+        })
+        this.handleCurrentChange(parseInt(INPUT['page']), true)
+      }
+    },
+    created() {
+      this.getColumnData()
+      this.getLocation()
+      if (document.getElementsByClassName('search')[0] && document.getElementsByClassName('search')[0].value) {
+        this.search_text = document.getElementsByClassName('search')[0].value
+      }
+      this.getSearchData()
+      if (this.getCookie('accessToken')) {
+        this.isLogin = true
+      }
+    },
+    mounted() {
+      if (window.history && window.history.pushState) {
+        history.pushState(null, null, document.URL);
+        window.addEventListener('popstate', this.goBack, false);
+      }
+    },
+    destroyed() {
+      window.removeEventListener('popstate', this.goBack, false);
+    }
+  })
+</script>
+ </body>
+
+</html>

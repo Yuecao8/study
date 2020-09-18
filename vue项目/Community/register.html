@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html data-use-rem="625">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>账号注册</title>
+        <link rel="stylesheet" href="css/common.css">
+        <link rel="stylesheet" href="css/login.css">
+        <style>
+            .title{
+                margin-bottom: 0.4rem;
+            }
+            .get-code{
+                font-size: 0.16rem;
+                color:rgba(221,69,60,0.3);
+            }
+            .get-code-active{
+                font-size: 0.16rem;
+                color:rgba(221,69,60,1);
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div class="modal" v-if="ifSendCode">验证码已发送!</div>
+            <div class="top">
+                <div class="top-item">
+                    <img src="images/login/back.png" alt="" class="back-icon" @click="window.history.go(-1)">
+                    <a href="login.html">登录</a>
+                </div>
+                <img src="images/login/avatar.png" alt="" class="avatar">
+            </div>
+            <div class="title">注册</div>
+            <div class="input-container">
+                <div class="input-item" class="username">
+                    <img :src="ifUserName ? 'images/login/user_active.png' : 'images/login/user.png' " alt="" class="user-icon">
+                    <input type="text" placeholder="请输入您的姓名" v-model="username" @focus="changeIcon('name')">
+                </div>
+                <div class="input-item" class="phone">
+                    <img :src="ifPhone ? 'images/login/phone_active.png' : 'images/login/phone.png' " alt="" class="phone-icon">
+                    <input type="text" placeholder="请输入手机号" v-model="phone" @focus="changeIcon('phone')">
+                </div>
+                <div class="input-item" class="phone">
+                    <img :src="ifCode ? 'images/login/code_active.png' : 'images/login/code.png' " alt="" class="phone-icon">
+                    <input type="text" placeholder="请输入验证码" v-model="phoneCode" @focus="changeIcon('code')">
+                    <div class="get-code" v-if="!canGetCode">获取验证码</div>
+                    <div class="get-code-active" v-if="canGetCode" @click="getCode()">获取验证码</div>
+                </div>
+                <div class="input-item" class="password">
+                    <img :src="ifPassword ? 'images/login/password_active.png' : 'images/login/password.png' " alt="" class="pwd-icon">
+                    <input :type="ifShowPwd ? 'text' : 'password' " placeholder="请设置密码" v-model="password"  @focus="changeIcon('pwd')">
+                    <img src="images/login/hide.png" alt="" class="hide-pwd" @click="showPwd()" v-if="!ifShowPwd">
+                    <img src="images/login/show.png" alt="" class="show-pwd" @click="showPwd()" v-if="ifShowPwd">
+                </div>
+            </div>
+            <div class="login-button disabled" v-if="canLogin<4">
+                下一步
+            </div>
+            <div class="login-button abled" @click="login()" v-if="canLogin>3">
+                下一步
+            </div>
+        </div>
+        <script src="assets/change_resize.js"></script>
+        <script src="assets/zepto.min.js"></script> 
+        <script src="assets/axios.min.js"></script>
+        <script src="assets/vue.js"></script>
+        <script src="assets/vconsole.min.js"></script>
+        <script src="js/register.js"></script>
+    </body>
+</html>

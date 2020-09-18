@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html data-use-rem="625">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>忘记密码</title>
+        <link rel="stylesheet" href="css/common.css">
+        <link rel="stylesheet" href="css/login.css">
+        <style>
+            .title{
+                margin-bottom: 0.4rem;
+            }
+            .get-code{
+                font-size: 0.16rem;
+                color:rgba(221,69,60,0.3);
+            }
+            .get-code-active{
+                font-size: 0.16rem;
+                color:rgba(221,69,60,1);
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div class="modal" v-if="ifSendCode">验证码已发送!</div>
+            <div class="top">
+                <div class="top-item">
+                    <img src="images/login/back.png" alt="" class="back-icon" @click="window.history.go(-1)">
+                </div>
+                <img src="images/login/avatar.png" alt="" class="avatar">
+            </div>
+            <div class="title">手机号验证</div>
+            <div class="input-container">
+                <div class="input-item" class="phone" v-if="step == 0">
+                    <img :src="ifPhone ? 'images/login/phone_active.png' : 'images/login/phone.png' " alt="" class="phone-icon">
+                    <input type="text" placeholder="请输入手机号" v-model="phone" @focus="changeIcon('phone')">
+                </div>
+                <div class="input-item" class="phone" v-if="step == 0">
+                    <img :src="ifCode ? 'images/login/code_active.png' : 'images/login/code.png' " alt="" class="phone-icon">
+                    <input type="text" placeholder="请输入验证码" v-model="code" @focus="changeIcon('code')">
+                    <div class="get-code" v-if="!canGetCode">获取验证码</div>
+                    <div class="get-code-active" v-if="canGetCode" @click="getCode()">获取验证码</div>
+                </div>
+                <div class="input-item" class="password" v-if="step == 1">
+                    <img :src="ifPassword ? 'images/login/password_active.png' : 'images/login/password.png' " alt="" class="pwd-icon">
+                    <input :type="ifShowPwd ? 'text' : 'password' " placeholder="请设置密码" v-model="password"  @focus="changeIcon('pwd')">
+                    <img src="images/login/hide.png" alt="" class="hide-pwd" @click="showPwd()" v-if="!ifShowPwd">
+                    <img src="images/login/show.png" alt="" class="show-pwd" @click="showPwd()" v-if="ifShowPwd">
+                </div>
+            </div>
+            <div class="login-button disabled" v-if="canLogin<3 && step==0">
+                下一步
+            </div>
+            <div class="login-button abled" @click="nextStep()" v-if="canLogin>2 && step==0">
+                下一步
+            </div>
+            <div class="login-button disabled" v-if="!confirmPwd && step==1">
+                确认
+            </div>
+            <div class="login-button abled" @click="confirm()" v-if="confirmPwd && step==1">
+                确认
+            </div>
+        </div>
+        <script src="assets/change_resize.js"></script>
+        <script src="assets/zepto.min.js"></script> 
+        <script src="assets/axios.min.js"></script>
+        <script src="assets/vue.js"></script>
+        <script src="assets/vconsole.min.js"></script>
+        <script src="js/forgetPwd.js"></script>
+    </body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="author" content="" />
+    <title>应用</title>
+    <link rel="stylesheet" href="{$TEMPLATE}css/base.css">
+    <link rel="stylesheet" href="{$TEMPLATE}css/common.css">
+    <link rel="stylesheet" href="{$TEMPLATE}css/style.css">
+    <link rel="stylesheet" href="{$TEMPLATE}css/swiper.min.css">
+    <script src="{{$TEMPLATE}}js/jquery.min.js"></script>
+    <script src="{{$TEMPLATE}}js/swiper.min.js"></script>
+    <script src="{{$TEMPLATE}}js/smartcitysdk.js"></script>
+    <script src="{{$TEMPLATE}}js/responsive.js"></script>
+</head>
+<body>
+
+<!-- 热门服务 部分 -->
+<div id="app">
+<div class="serviceWrap">
+    <div class="head">应用</div>
+
+    <!-- 轮转图 -->
+    <div class="lunbo_box">
+        <!-- Swiper -->
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+
+                <!--{hoge:content_list column_id="769" order_by="order_id desc" page_size="3" need_index_pic="1" return="r"}-->
+                <div class="swiper-slide">
+                    <a href="{$r['publish_url']}" target="_blank" class="lb_img" title="{$r['title']}">
+                        <img src="{thumb($r['index_pic'], '0', '750', '290','50')}" alt="{$r['title']}">
+                        <span class="lb_filter"></span>
+                    </a>
+                </div>
+                <!--{/hoge:content_list}-->
+
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+
+    <div class="service">
+        <div class="areaTit">热门服务</div>
+        <div class="listWrap">
+            <ul class="list flex clearfix remenfuwuList">
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- 切换 -->
+<div class="tabWrap">
+    <ul class="flex">
+        <li class="current" data-id="771">政务办理</li>
+        <li data-id="773">城市生活</li>
+        <li data-id="774">文化教育</li>
+        <li data-id="775">医疗健康</li>
+    </ul>
+</div>
+<div class="tabListWrap">
+    <ul class="list tabList clearfix">
+        
+    </ul>
+</div>
+<div class="rowLine"></div>
+
+<div class="areaTit" style="padding: .33rem 0 .3rem .3rem;line-height:.5rem;">交通出行</div>
+<div class="areaList">
+    <ul class="list tabList clearfix jtcxList">
+
+    </ul>
+</div>
+</div>
+
+<script>
+
+    $(function(){
+
+        // 头部 幻灯片  轮播图
+        var lb_swiper = new Swiper('.lunbo_box .swiper-container', {
+            spaceBetween: 30,
+            centeredSlides: true,
+            loop:true,
+            autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.lunbo_box .swiper-pagination',
+                clickable: true,
+            }
+        });
+
+        var itemDom='', dataLen, i=0, className, type, link, linkA;
+        function listContent(id, offset, count, classname){
+            $.ajax({
+                url: 'http://mapi.yingxi.tv/api/v1/contents.php', // 请求的地址
+                type: 'get', // 请求的类型（get post）
+                data: {
+                    "count": count,
+                    "offset": offset,
+                    "column_id": id,
+                },
+                dataType: "json", // 期望后端给你返回的数据类型
+                timeout: 5000, // 如果5秒之后，数据还没有回来，则请求超时
+                async: true, // 是否异步，默认为true（是异步）
+                success: function (data) {
+                    // console.log(classname,data);
+                    dataLen = data.length;
+                    className = classname;
+
+                    for(; i < dataLen; i++){
+                        if(data[i].type == "link" && data[i].link.indexOf("http") != -1){
+                            link = data[i].link;
+                            linkA = data[i].link;
+                        }else if(data[i].type == "link" && data[i].link.indexOf("http") == -1){
+                            link = 'javascript:void(0)';
+                            linkA = data[i].link;
+                        }else{
+                            link = data[i].content_urls.h5;
+                            linkA = data[i].content_urls.h5;
+                        }
+                        itemDom += `<li data-type="${data[i].type}" data-link="${linkA}" onclick="SmartCity.linkTo(linkA)">
+                            <a href="${link}" class="imgBox">
+                                <img src="${data[i].index_pic}" alt="">
+                            </a>
+                            <p class="tit">
+                                <a href="${link}">${data[i].title}</a>
+                            </p>
+                        </li>`;
+                    }
+                    $(className).append(itemDom);
+                    i = 0;
+                    itemDom='';
+
+                    // isSmartCityApp为true标识是在厚建客户端打开，否则不是。
+                    var isSmartCityApp = SmartCity.isSmartCityApp();
+                
+                    // $(".list li").each(function(){
+                    //     $(this).click(function(){
+                    //         type = $(this).data("type");
+                    //         link = $(this).data("link");
+                    //         // alert(link);
+                    //         if(type == "link" && isSmartCityApp){
+                    //             if(link.indexOf("http") == -1){
+                    //                 SmartCity.linkTo({
+                    //                     innerLink: link
+                    //                 });
+                    //             }else{
+                    //                 SmartCity.linkTo({
+                    //                     outlink: link
+                    //                 });
+                    //             }
+                    //         }
+                    //     });
+                    // });
+                    
+                }, // 成功的回调
+                error: function (err) {
+                }, // 失败回调
+            })
+        }
+        listContent(770,0,5,".remenfuwuList");
+        listContent(772,0,8,".jtcxList");
+        var currentId = $(".tabWrap li.current").data("id");
+        listContent(currentId,0,25,".tabListWrap ul");
+
+        $(".tabWrap li").click(function(){
+            $(".tabListWrap ul").html("");
+            $(this).addClass("current").siblings().removeClass("current");
+            var id = $(this).data("id");
+            listContent(id,0,25,".tabListWrap ul");
+        });
+
+    });
+
+</script>
+
+</body>
+</html>

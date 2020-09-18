@@ -1,0 +1,119 @@
+html,body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,images,div,dl,dt,dd{margin:0;padding:0;border:0;} 
+a{
+	text-decoration: none;
+}
+ul,li{
+	list-style: none;
+}
+html,body{
+   width:100%;height:100%;
+}
+div{
+	box-sizing: border-box;
+}
+.wrapper{
+	width:100%;
+	height: 100%;
+	background: #F7F7F7;
+	padding: .15rem .12rem 0;
+}
+.wrapper_box{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+.wrapper_modal{
+	width: 100%;
+	height: .4rem;
+	background: #FFFFFF;
+	display: flex;
+	align-items: center;
+	padding-left:.12rem;
+	margin-bottom: .15rem;
+}
+.wrapper_sub{
+	font-size: .14rem;
+	color: #999999;
+	margin-right: .15rem;
+}
+.wrapper_cnt{
+	font-size: .16rem;
+	color: #333333;
+}
+.wrapper_ctt{
+	font-size: .16rem;
+	color: #333333;
+	display: inline-block;
+    width: 100%;
+    word-wrap: break-word;
+    white-space: normal;
+}
+.wrapper_content{
+	width: 100%;
+	min-height: .75rem;
+	background: #FFFFFF;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	margin-bottom: .15rem;
+	padding: .1rem .12rem;
+}
+.wrapper_input{
+	outline: none;
+	border: none;
+	font-size: .16rem;
+	color: #333333;
+}
+.wrapper_button{
+	width: 100%;
+	height: .44rem;
+	border-radius: .5rem;
+	background: rgb(110,159,248);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: .77rem;
+}
+.wrapper_button span{
+	font-size: .17rem;
+	color: #FFFFFF;
+}
+.wrapper_button_submit{
+	background: dodgerblue;
+}
+.wrapper_content input::-webkit-input-placeholder {
+  /* WebKit browsers */
+  color: #999999;
+}
+.wrapper_content input::-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #999999;
+}
+.wrapper_content input::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #999999;
+}
+.wrapper_content input::-ms-input-placeholder {
+  /* Internet Explorer 10+ */
+  color: #999999; 
+}
+
+.tips{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	padding-bottom: 0.6rem;
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
+}
+.tips span{
+	text-align: center;
+	font-size: 0.14rem;
+	background-color: rgba(0,0,0,0.7);
+	color: #fff;
+	padding: 0.08rem 0.1rem;
+	border-radius: 0.07rem;
+}

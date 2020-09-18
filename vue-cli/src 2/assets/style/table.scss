@@ -1,0 +1,97 @@
+/**** 表单样式 ****/
+// 容器
+$table-padding:0 20px;
+.table-body,.white{
+  background: #fff;
+}
+//表头
+.table-header{
+  height: 36px;
+  line-height: 36px;
+  padding: $table-padding;
+  background: #FAFAFA;
+  font-size: 12px;
+  color: #888888;
+  line-height: 12px;
+  
+}
+.header-inside{
+  background: #FAFAFA;
+  height: 36px;
+  line-height: 36px;
+  color: #566075;
+}
+//列表item 
+.table-item{
+  padding: $table-padding;
+  height: 44px;
+  line-height: 44px;
+  font-size: 12px;
+  color: #333;
+  line-height: 12px;
+  border-bottom: 1px solid #F2F2F2;
+}
+.table-item-inside{
+  color: #566075;
+  padding:16px 20px;
+}
+.table-header>div,.table-item>div,.table-header>span,.table-item>span{
+  margin-right:20px;
+  word-break: break-all;
+}
+//分页
+.page-total{
+  font-size: 12px;
+  color: #909399;
+  margin-right: 10px;
+}
+.table-bottom-page{
+  height: 78px;
+  justify-content: flex-end;
+  padding:0 20px;
+}
+.table-bottom-inside{
+  height: 165px;
+}
+//暂无数据样式
+.table-no-data{
+  text-align: center;
+  height: 300px;
+  line-height: 300px;
+  color: #909399;
+}
+//操作按钮
+.table-operate{
+  position: relative;
+}
+.table-operate-box{
+  background: #FFFFFF;
+  box-shadow: 0 1px 6px 0 rgba(0,0,0,0.10); 
+  min-width: 100px;
+  right: 80px;
+  cursor: pointer;
+  position: absolute;
+  z-index: 2;
+}
+.table-opera-item{
+  display: block;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 12px;
+  color: #333333;
+  &:hover{
+    background: #FAFBFC;
+  }
+}
+.table-operate-icon{
+  font-size:20px;
+  color:#999999;
+  cursor: pointer;
+}
+.table-active-bg{
+  color:#2787EF;
+}
+.table-operate-content{
+  width: 20px;
+}

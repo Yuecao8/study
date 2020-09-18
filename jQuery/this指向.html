@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>this指向</title>
+</head>
+<body>
+<h3>call 、bind 、 apply 这三个函数的对比</h3>
+</body>
+<script>
+  var name = '大花';
+  var age = 18;
+  var obj = {
+    name: '小花',
+    objAge: this.age,
+    // age: 20,
+    describe: function () { 
+      console.log(this);//obj 对象(这里的objAge是有值的，值为18)
+      console.log(`${this.name}今年${this.age}岁`)
+    },
+    home: function(f,t) {
+      console.log(`${this.name}今年${this.age}岁,来自${f},在${t}上班`)
+    }
+  }
+  console.log(obj.objAge);//18
+  obj.describe();//小花今年undefined岁
+  // 若在obj中重新定义一个age为20，则此时打印出来的为"小花今年20岁"
+
+  function myFun() {
+    console.log(this);//window
+    console.log(`${this.name}今年${this.age}岁`)
+  }
+  myFun();//大花今年18岁
+
+  // 由上述可知： 在obj对象的describe方法中 this的指向为 obj对象
+  //            在myFun()方法中          this的指向为 window
+
+  var objNow = {
+    name: '花花',
+    age: 26,
+  }
+
+  obj.describe.call(objNow);//花花今年26岁
+  obj.describe.apply(objNow);//花花今年26岁
+  obj.describe.bind(objNow)();//花花今年26岁
+
+  // 上述 call()、apply()、bind()都可以改变this的指向；其中bind需要自调用
+
+  obj.home.call(objNow,'安徽','南京');//花花今年26岁,来自安徽,在南京上班
+  obj.home.apply(objNow,['安徽','南京']);//花花今年26岁,来自安徽,在南京上班
+  obj.home.bind(objNow,'安徽','南京')();//花花今年26岁,来自安徽,在南京上班
+  obj.home.bind(objNow,['安徽','南京'])();//花花今年26岁,来自安徽,南京,在undefined上班
+
+  // 1、这三个函数的第一个参数都是 this 的指向对象，
+  // 2、第二个参数差别就来了：
+  // call的参数是直接放进去的，第二第三第n个参数全都用逗号分隔，直接放到后面 obj.home.call(objNow,'安徽',...,'string');
+  // apply的所有参数都必须放在一个数组里面传进去obj.home.apply(objNow,['安徽', ..., 'string' ]);
+  // bind除了返回是函数以外，它的参数和call() 一样。
+</script>
+</html>

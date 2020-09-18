@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1300">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>搜索列表</title>
+  <link rel="stylesheet" href="ceshi.css">
+  <link rel="stylesheet" href="text.css">
+  <script src="./js/jquery.min.js"></script>
+  <script src="./js/moment.js"></script>
+  <script src="./js/liushi.js"></script>
+  <script src="./js/daterangepicker.js"></script>
+  <!-- <script src="./js/iboot.js"></script> -->
+  <style>
+    .back_top {
+      width: 46px;
+      height: 44px;
+      position: fixed;
+      bottom: 40px;
+      right: 30px;
+      background-color: #ccc;
+      border-radius: 2px;
+      cursor: pointer;
+      text-align: center;
+      line-height: 44px;
+      transition: background 0.5s;
+      -moz-transition: background 0.5s;
+      -webkit-transition: background 0.5s;
+      -o-transition: background 0.5s;
+      display: none;
+      z-index: 666;
+    }
+
+    .back_top i {
+      font-size: 26px;
+      color: #fff;
+    }
+
+    .back_top:hover {
+      background-color: #DD2F3C;
+    }
+
+    /* .imgList:after{                       
+      content: ' ';            
+      flex-grow: 999999999999999999999999999999999999;        
+    }
+    .imgList a img{         
+      height: 150px;        
+      width: auto;                     
+      flex-grow: 1;         
+      object-fit: cover;      
+    }
+    .imgList a{
+      position: relative;
+      margin: 2px;
+      box-sizing: border-box;
+    } */
+  </style>
+
+</head>
+
+<body>
+  <div class="back_top"><i class="iconfont">&#xe61e;</i></div>
+  <!---头部-->
+  <!-- {include $TEMPLATE .'common.header'} -->
+  <!---头部-->
+  <div class="searchBox">
+    <div class="search_head container">
+      <div class="search_source flexBox flexLeft flexAlign">
+        <!-- <span class="sourcename">首页 </span>
+                <span class="sourcename"> >&nbsp;简约时尚</span> -->
+        <span class="sourcename">搜索结果：</span>
+        <div class="search_result" style="margin-left:-5px">共<span></span>个结果</div>
+      </div>
+      <div class="search_key flexBox flexBetween">
+        <div class="search_input flexBox flexBetween">
+          <input type="text" value="" id="keywords">
+          <!-- <img src="./images/face_reg.png" alt="" onclick="openPost()"> -->
+        </div>
+        <div class="search_btn flexBox flexAlign">
+          <span class="img_btn" onclick="searchKeyword(this)">搜索</span>
+          <div class="articeSearch flexBox flexAlign">
+            <span class="checkIcon" onclick="changeType(this)"></span>
+            <span>搜稿件</span>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="search_key postImg">
+                <div class="postImgBox">
+                    <input type="file">
+                    <p>上传图片</p>
+                </div>
+            </div> -->
+    </div>
+    <div class="search_contain">
+      <div class="search_contain_box container flexBox flexLeft">
+        <!-- 搜稿件：栏目，创建时间，作者，地区，标题 -->
+        <div class="search_contain_left">
+          <!-- 栏目筛选 -->
+          <div class="search_sorts articel">
+            <div class="search_title flexBox flexBetween flexAlign" style="font-size: 14px; font-weight: 500">
+              <!-- <span>当前状态</span> -->
+              <span>&gt;&nbsp;搜稿件</span>
+            </div>
+          </div>
+          <div class="search_sorts photo">
+            <div class="search_title flexBox flexBetween flexAlign" style="font-size: 14px; font-weight: 500">
+              <!-- <span>当前状态</span> -->
+              <span>&gt;&nbsp;搜图片</span>
+            </div>
+          </div>
+          <!-- 栏目筛选 -->
+          <div class="search_sorts articel">
+            <div class="search_title flexBox flexBetween flexAlign">
+              <span>分类</span>
+              <span class="shouqi" onclick="toggleUl(this,'column_list')"></span>
+            </div>
+            <ul class="sorts_list column_list flexBox flexWrap flexBetween"></ul>
+          </div>
+          <!-- 构图筛选 -->
+          <div class="search_sorts photo">
+            <div class="search_title flexBox flexBetween flexAlign">
+              <span>构图</span>
+              <span class="shouqi" onclick="toggleUl(this,'type_list')"></span>
+            </div>
+            <ul class="sorts_list type_list"></ul>
+          </div>
+          <!-- 节日筛选 -->
+          <div class="search_sorts photo">
+            <div class="search_title flexBox flexBetween flexAlign">
+              <span>节日</span>
+              <span class="shouqi" onclick="toggleUl(this,'holiday_list')"></span>
+            </div>
+            <ul class="sorts_list holiday_list flexBox flexWrap flexBetween"></ul>
+          </div>
+          <!-- 地点筛选 -->
+          <div class="search_sorts">
+            <div class="search_title flexBox flexBetween flexAlign">
+              <span>地点</span>
+              <span class="shouqi" onclick="toggleUl(this,'location_list')"></span>
+            </div>
+            <ul class="sorts_list location_list flexBox flexWrap flexBetween"></ul>
+          </div>
+          <!-- 下载最多 -->
+          <div class="search_sorts photo">
+            <div class="search_title flexBox flexLeft flexAlign">
+              <span class="checkIcon" onclick="searchDown(this)"></span>
+              <span>下载最多</span>
+            </div>
+          </div>
+          <!-- 拍摄日期 -->
+          <div class="search_sorts">
+            <div class="search_title flexBox flexLeft flexAlign">
+              <span class="checkIcon" onclick="selectTime(this)"></span>
+              <span class="imgTime">拍摄日期</span>
+            </div>
+            <div class="form-group" style="margin-top: 10px;display:none">
+              <div class="flexBox">
+                <input type="text" name="date2" id="date2" class="form-control" value="日期选择"
+                  style="width:248px;height: 34px;padding-left: 10px;">
+                <input type="hidden" id="startTime" name="startTime" class="form-control" />
+                <input type="hidden" id="endTime" name="endTime" class="form-control" />
+              </div>
+            </div>
+          </div>
+          <!-- 作者 -->
+          <div class="search_sorts articel">
+            <div class="search_title flexBox flexLeft flexAlign">
+              <span class="checkIcon" onclick="selectName(this)"></span>
+              <span>作者</span>
+            </div>
+            <div class="authorname" style="margin-top:10px;display: none">
+              <input type="text" name="username" value="" placeholder="输入作者名称"
+                style="width:235px;height: 34px;padding-left: 10px;" onblur="searchUser(this)">
+            </div>
+          </div>
+        </div>
+        <div class="search_contain_right">
+          <div class="checkedList flexBox flexLeft">
+            <ul class="flexBox flexLeft search_list flexWrap" style="margin-bottom: 0;"></ul>
+          </div>
+          <div class="imgList flexBox flexWrap">
+           
+          </div>
+          <button id="loadmore"><span class="getMore" style="display: none">加载更多</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <?php
+    	if(@$_REQUEST['search_text']){
+          $search_text = @$_REQUEST['search_text'];
+        }
+    ?> -->
+  <!-- <input class="search" value="{$search_text}" type="hidden" /> -->
+
+  <!---底部和分享页面---->
+  <!-- {include $TEMPLATE ."common/share"}
+  {include $TEMPLATE ."common/footer"} -->
+  <!---底部和分享页面---->
+  <script>
+    $("input[name='date2']").daterangepicker({
+      // autoApply: true,
+      autoUpdateInput: false,
+      // alwaysShowCalendars: true,
+      ranges: {
+        '今天': [moment(), moment()],
+        '昨天': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+        '近7天': [moment().subtract(7, 'days'), moment()],
+        '这个月': [moment().startOf('month'), moment().endOf('month')],
+        '上个月': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+      },
+      locale: {
+        format: "YYYY/MM/DD",
+        separator: " - ",
+        applyLabel: "确认",
+        cancelLabel: "清空",
+        fromLabel: "开始时间",
+        toLabel: "结束时间",
+        customRangeLabel: "自定义",
+        daysOfWeek: ["日", "一", "二", "三", "四", "五", "六"],
+        monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"]
+      }
+    }).on('cancel.daterangepicker', function (ev, picker) {
+      $("#date2").val("请选择日期范围");
+      $("#startTime").val("");
+      $("#endTime").val("");
+    }).on('apply.daterangepicker', function (ev, picker) {
+      $("#startTime").val(picker.startDate.format('YYYY-MM-DD'));
+      $("#endTime").val(picker.endDate.format('YYYY-MM-DD'));
+      $("#date2").val(picker.startDate.format('YYYY-MM-DD') + " 至 " + picker.endDate.format('YYYY-MM-DD'));
+      param.start_time = picker.startDate.format('YYYY-MM-DD')
+      param.end_time = picker.endDate.format('YYYY-MM-DD')
+      param.page = 1
+      seach_ajax(baseUrl, param)
+    });
+    var baseUrl = 'http://middle-api.plus.vinj.cn/api/gallery/photo/common/search'
+    // 切换图片和文稿筛选
+    var changeType = function (event) {
+      if ($(event).hasClass('active')) {
+        baseUrl = 'http://middle-api.plus.vinj.cn/api/gallery/photo/common/search'
+        $(".imgTime").html('拍摄时间')
+        param.page = 1
+        seach_ajax(baseUrl, param)
+      } else {
+        baseUrl = 'http://middle-api.plus.vinj.cn/api/gallery/common/search'
+        $(".imgTime").html('创建时间')
+        param.page = 1
+        seach_ajax(baseUrl, param)
+      }
+      $(event).toggleClass("active")
+      $(".articel").toggle()
+      $(".photo").toggle()
+      $(".search_contain .checkIcon").removeClass("active")
+      // 作者值为空且不选中
+      $(".authorname").hide()
+      $(".authorname input").val("")
+      // 时间值为空且不选中
+      $(".form-group").hide()
+      $("#date2").val('日期选择')
+      searchList = []
+      typeAll = 1
+      holidayAll = 1
+      locationAll = 1
+      columnAll = 1
+      checkHolidayAll(1)
+      checkLocationAll(1)
+      checkTypeAll(1)
+      checkColumnAll(1)
+      appendSearch(searchList)
+    }
+    // 选中时间筛选
+    function selectTime(event) {
+      $(event).toggleClass("active")
+      $(".form-group").slideToggle()
+    }
+    // 选中作者筛选
+    function selectName(event) {
+      $(event).toggleClass("active")
+      $(".authorname").slideToggle()
+      $(".authorname input").val("")
+    }
+    // 作者搜索
+    var author;
+    // 失去焦点
+    function searchUser(event) {
+      author = $(".authorname input").val()
+      param.author = author
+      param.page = 1
+      seach_ajax(baseUrl, param)
+    }
+    // 回车
+    $(".authorname input").keyup(function () {
+      if (event.keyCode == 13) {
+        searchUser()
+      }
+    });
+    // 下载量搜索
+    function searchDown(event) {
+      if ($(event).hasClass('active')) {
+        param.downloads = 0
+      } else {
+        param.downloads = 1
+      }
+      $(event).toggleClass("active")
+      param.page = 1
+      seach_ajax(baseUrl, param)
+    }
+    // 获取栏目数据
+    var columnList = [];
+    var checkColumn = []
+    $.ajax({
+      url: "http://mapi.plus.vinj.cn/api/open/middle/column_list?appid=m2oiacrr7knlqi869e&appkey=02523699ba0579628a1dc8d16defa699",
+      type: 'get', // 请求的类型（get post）
+      data: {},
+      dataType: "json", // 期望后端给你返回的数据类型
+      timeout: 5000, // 如果5秒之后，数据还没有回来，则请求超时
+      async: true, // 是否异步，默认为true（是异步）
+      success: function (res) {
+        columnList = res.data;
+        $(".column_list").append(`
+                <li class="flexBox flexLeft flexAlign">
+                    <span class="checkIcon checkAll" onclick="checkColumnAll()"></span>
+                    <span>全部分类</span>
+                </li>
+            `);
+        $.each(columnList, function (index, item) {
+          $(".column_list").append(`
+                    <li class="flexBox flexLeft flexAlign" data_id="${item.id}" data_name = "${item.id}">
+                        <span class="checkIcon" onclick="checkColumnItem(${item.id},this)"></span>
+                        <span>${item.name}</span>
+                    </li>
+                `);
+        })
+      }, // 成功的回调
+      error: function (err) {}, // 失败回调
+    })
+    // 获取分类数据
+    var locationList = [];
+    var checkLocation = []
+    var holidayList = []
+    var checkHoliday = []
+    var typeList = []
+    var checkType = []
+    $.ajax({
+      url: "http://middle-api.plus.vinj.cn/api/gallery/newSearch/options",
+      type: 'get', // 请求的类型（get post）
+      data: {},
+      dataType: "json", // 期望后端给你返回的数据类型
+      timeout: 5000, // 如果5秒之后，数据还没有回来，则请求超时
+      async: true, // 是否异步，默认为true（是异步）
+      success: function (res) {
+        locationList = res.location;
+        holidayList = res.holiday;
+        typeList = res.composition;
+        // 地区
+        $(".location_list").append(`
+                <li class="flexBox flexLeft flexAlign">
+                    <span class="checkIcon checkAll" onclick="checkLocationAll()"></span>
+                    <span>全部</span>
+                </li>
+            `);
+        $.each(locationList, function (index, item) {
+          $(".location_list").append(`
+                    <li class="flexBox flexLeft flexAlign" >
+                        <span class="checkIcon" onclick="checkLocationItem('${item}',this)" data_name = "${item}"></span>
+                        <span>${item}</span>
+                    </li>
+                `);
+        })
+        // 节日
+        $(".holiday_list").append(`
+                <li class="flexBox flexLeft flexAlign">
+                    <span class="checkIcon checkAll" onclick="checkHolidayAll()"></span>
+                    <span>全部</span>
+                </li>
+            `);
+        $.each(holidayList, function (index, item) {
+          $(".holiday_list").append(`
+                    <li class="flexBox flexLeft flexAlign" >
+                        <span class="checkIcon" onclick="checkHolidayItem('${item}',this)" data_name = "${item}"></span>
+                        <span>${item}</span>
+                    </li>
+                `);
+        })
+        $(".type_list").append(`
+                <li class="flexBox flexLeft flexAlign">
+                    <span class="checkIcon" onclick="checkTypeAll()"></span>
+                    <span class="quanbuIcon"></span>
+                    <span>全部</span>
+                </li>
+            `);
+        $.each(typeList, function (index, item) {
+          $(".type_list").append(`
+                    <li class="flexBox flexLeft flexAlign">
+                        <span class="checkIcon" onclick="checkTypeItem(${item.id} ,this)" data_name = "${item.id}"></span>
+                        <img src="${item.img}" alt="" style="width: 16px; height: 16px;margin-left: 40px;margin-right: 10px">
+                        <span>${item.name}</span>
+                    </li>
+                `)
+        })
+      }, // 成功的回调
+      error: function (err) {}, // 失败回调
+    });
+
+    // 栏目选择
+    // 全选
+    var columnAll = 0;
+
+    var checkColumnAll = function (event) {
+      if (columnAll == 0) {
+        $(".column_list .checkIcon").addClass("active")
+        $.each(columnList, function (index, item) {
+          if (checkColumn.indexOf(item.id) <= -1) {
+            checkColumn.push(item.id)
+          }
+        })
+        columnAll = 1
+      } else {
+        $(".column_list .checkIcon").removeClass("active")
+        checkColumn = []
+        columnAll = 0
+      }
+      if (event == 1) return
+      allCheckList()
+    }
+    // 单选
+    function checkColumnItem(id, event) {
+      if (checkColumn.indexOf(id) > -1) {
+        checkColumn.splice(checkColumn.indexOf(id), 1)
+      } else {
+        checkColumn.push(id)
+      }
+      $(event).toggleClass("active")
+      if (checkColumn.length == columnList.length) {
+        $(".column_list .checkAll").addClass("active")
+        columnAll = 0
+      } else {
+        $(".column_list .checkAll").removeClass("active")
+        columnAll = 0
+      }
+      allCheckList()
+    }
+
+    // 地区选择
+    // 全选
+    var locationAll = 0;
+
+    function checkLocationAll(event) {
+      if (locationAll == 0) {
+        $(".location_list .checkIcon").addClass("active")
+        $.each(locationList, function (index, item) {
+          if (checkLocation.indexOf(item) <= -1) {
+            checkLocation.push(item)
+          }
+        })
+        locationAll = 1
+      } else {
+        $(".location_list .checkIcon").removeClass("active")
+        checkLocation = []
+        locationAll = 0
+      }
+      if (event == 1) return
+      allCheckList()
+    }
+    // 单选
+    function checkLocationItem(id, event) {
+      if (checkLocation.indexOf(id) > -1) {
+        checkLocation.splice(checkLocation.indexOf(id), 1)
+      } else {
+        checkLocation.push(id)
+      }
+      $(`.checkIcon[data_name='${id}']`).toggleClass("active")
+      if (checkLocation.length == locationList.length) {
+        $(".location_list .checkAll").addClass("active")
+        locationAll = 0
+      } else {
+        $(".location_list .checkAll").removeClass("active")
+        locationAll = 0
+      }
+      allCheckList()
+    }
+
+    // 节日选择
+    // 全选
+    var holidayAll = 0;
+
+    function checkHolidayAll(event) {
+      if (holidayAll == 0) {
+        $(".holiday_list .checkIcon").addClass("active")
+        $.each(holidayList, function (index, item) {
+          if (checkHoliday.indexOf(item) <= -1) {
+            checkHoliday.push(item)
+          }
+        })
+        holidayAll = 1
+      } else {
+        $(".holiday_list .checkIcon").removeClass("active")
+        checkHoliday = []
+        holidayAll = 0
+      }
+      if (event == 1) return
+      allCheckList()
+    }
+    // 单选
+    function checkHolidayItem(id, event) {
+      if (checkHoliday.indexOf(id) > -1) {
+        checkHoliday.splice(checkHoliday.indexOf(id), 1)
+      } else {
+        checkHoliday.push(id)
+      }
+      $(`.checkIcon[data_name='${id}']`).toggleClass("active")
+      if (checkHoliday.length == holidayList.length) {
+        $(".holiday_list .checkAll").addClass("active")
+        holidayAll = 0
+      } else {
+        $(".holiday_list .checkAll").removeClass("active")
+        holidayAll = 0
+      }
+      allCheckList()
+    }
+
+    // 构图选择
+    // 全选
+    var typeAll = 0;
+
+    function checkTypeAll(event) {
+      if (typeAll == 0) {
+        $(".type_list .checkIcon").addClass("active")
+        $.each(typeList, function (index, item) {
+          if (checkType.indexOf(Number(item.id)) <= -1) {
+            checkType.push(Number(item.id))
+          }
+        })
+        typeAll = 1
+      } else {
+        $(".type_list .checkIcon").removeClass("active")
+        checkType = []
+        typeAll = 0
+      }
+      if (event == 1) return
+      allCheckList()
+    }
+    // 单选
+    var typeAll = 0;
+
+    function checkTypeItem(id, event) {
+      if (checkType.indexOf(id) > -1) {
+        checkType.splice(checkType.indexOf(id), 1)
+      } else {
+        checkType.push(id)
+      }
+      $(`.checkIcon[data_name='${id}']`).toggleClass("active")
+      if (checkType.length == typeList.length) {
+        $(".type_list li:nth-child(1) .checkIcon").addClass("active")
+        typeAll = 0
+      } else {
+        $(".type_list li:nth-child(1) .checkIcon").removeClass("active")
+        typeAll = 0
+      }
+      allCheckList()
+    }
+
+    // 获取所有选中数据
+    var searchList;
+
+    function allCheckList() {
+      searchList = []
+      // 选中的构图
+      $.each(typeList, function (index, item) {
+        if (checkType.indexOf(Number(item.id)) > -1) {
+          searchList.push(item.name)
+        }
+      })
+      // 选中的地区
+      $.each(locationList, function (index, item) {
+        if (checkLocation.indexOf(item) > -1) {
+          searchList.push(item)
+        }
+      })
+      // 选中的栏目
+      $.each(columnList, function (index, item) {
+        if (checkColumn.indexOf(item.id) > -1) {
+          searchList.push(item.name)
+        }
+      })
+      // 选中节日
+      $.each(holidayList, function (index, item) {
+        if (checkHoliday.indexOf(item) > -1) {
+          searchList.push(item)
+        }
+      })
+      appendSearch(searchList)
+      if (checkType.length == 3) {
+        param.composition = 0
+      } else {
+        param.composition = checkType.join(',')
+      }
+      param.holiday = checkHoliday.join(',')
+      param.location = checkLocation.join(',')
+      param.column_id = checkColumn.join(',')
+      param.page = 1
+      seach_ajax(baseUrl, param)
+    }
+
+    // 选中数据的渲染
+    function appendSearch(arr) {
+      if (arr.length == 0) {
+        $(".search_list").html('')
+        return
+      }
+      var tmp = ''
+      $.each(arr, function (index, item) {
+        tmp = `
+            ${tmp}
+            <li class="flexBox flexLeft flexAlign">
+                <span>${item}</span>
+                <span class="closeIcon" onclick="deletItem('${item}',this)"></span>
+            </li>
+            `
+        $(".search_list").html(tmp + '<div class="deletAll" onclick="deletAll(this)">清空搜索</div>')
+      })
+    }
+
+    // 删除单个选中数据
+    function deletItem(index, event) {
+      if (checkHoliday.indexOf(index) > -1) {
+        checkHolidayItem(index, event)
+      }
+      if (checkLocation.indexOf(index) > -1) {
+        checkLocationItem(index, event)
+      }
+      $.each(typeList, function (typeIndex, typeItem) {
+        if (typeItem.name == index) {
+          if (checkType.indexOf(Number(typeItem.id)) > -1) {
+            checkTypeItem(Number(typeItem.id), event)
+          }
+        }
+      })
+      $.each(columnList, function (columnIndex, columnItem) {
+        if (columnItem.name == index) {
+          if (checkColumn.indexOf(Number(columnItem.id)) > -1) {
+            checkColumnItem(Number(columnItem.id), event)
+          }
+        }
+      })
+      searchList.splice(searchList.indexOf(index), 1)
+    }
+
+    // 删除全部选中数据
+    function deletAll(event) {
+      searchList = []
+      typeAll = 1
+      holidayAll = 1
+      locationAll = 1
+      columnAll = 1
+      checkHolidayAll(1)
+      checkLocationAll(1)
+      checkTypeAll(1)
+      checkColumnAll(1)
+      appendSearch(searchList)
+      seach_ajax(baseUrl, param)
+    }
+
+    var column_id = []
+
+
+    // 关键字搜索
+    function searchKeyword(e) {
+      param.search_text = $("#keywords").val()
+      param.page = 1
+      seach_ajax(baseUrl, param)
+    }
+
+    function Srr(lowValue, highValue) {
+      var choice = highValue - lowValue + 1;
+      return Math.floor(Math.random() * choice + lowValue);
+    }
+    var param = {
+      search_text: '',
+      location: '',
+      start_time: '',
+      end_time: '',
+      author: '',
+      composition: '',
+      holiday: '',
+      downloads: '',
+      page_num: 10,
+      page: 1
+    }
+    $("#keywords").val($(".search").val())
+    param.search_text = $("#keywords").val()
+    //搜索接口方法 关键字、栏目id、自定义时间开始时间/结束时间、地区id、作者
+    function seach_ajax(url, param) {
+      $("#loadmore .getMore").html('加载更多')
+      var random = [];
+      $.ajax({
+        url: url, // 请求的地址
+        type: "get", // 请求的类型（get post）
+        data: {
+          "search_text": param.search_text,
+          "column_id": param.column_id,
+          "location": param.location,
+          "start_time": param.start_time,
+          "end_time": param.end_time,
+          "author": param.author,
+          "act_id": 1,
+          "composition": param.composition,
+          "holiday": param.holiday,
+          "downloads": param.downloads,
+          "page_num": param.page_num,
+          "page": param.page
+        },
+        dataType: "json", // 期望后端给你返回的数据类型
+        timeout: 5000, // 如果5秒之后，数据还没有回来，则请求超时
+        async: false, // 是否异步，默认为true（是异步）
+        // 成功的回调
+        success: function (res) {
+          var tmp_length = res.data.data.length;
+          if (tmp_length > 0) {
+            var ret = res.data.data;
+            $.each(ret, function (index, item) {
+              var imgSize = item.width && item.width != 0 ? `${item.width}x${item.height}` : ''
+              var alt = item.photo_name || item.title || ""
+              $('.imgList').append(`
+                <a href="" target="_blank" class="flexBox flexMiddle">
+                  <img src="${item.index_pic}?imageView/w/420" alt= "${alt}" title="${alt}">
+                  <div class="title">
+                      <p>${alt}</p>
+                      <span>${imgSize}</span>
+                  </div>
+                </a>
+              `)
+            })
+            if (res.data.total > param.page_num) {
+              $("#loadmore span").show()
+              $("#loadmore span").html('加载更多').removeClass("active");
+            } else {
+              $("#loadmore").hide()
+            }
+          } else {
+            $("#loadmore span").html('暂无更多数据').addClass("active").show();
+          }
+          $(".search_result span").html(res.data.total)
+        }
+      })
+      // return random
+    }
+    seach_ajax(baseUrl, param)
+    // var iboot = new Iboot($('.iboot-controller'), {
+    //   list: seach_ajax(baseUrl, param),
+    //   baseHeight: 150,
+    //   template: function (dom) {
+    //     dom.addClass('some')
+    //     return dom
+    //   },
+    //   beforeLoad: function () {
+    //     console.log('beforeLoad')
+    //   },
+    //   afterLoad: function () {
+    //     console.log('afterLoad')
+    //   }
+    // })
+    // $(window).resize(function () {
+    //   iboot.resize()
+    // })
+
+    $('.getMore').click(function () {
+      param.page += 1;
+      seach_ajax(baseUrl, param)
+    })
+
+    function toggleUl(e, calssname) {
+      $(e).toggleClass("active")
+      $(`.${calssname}`).slideToggle()
+    }
+    //返回顶部
+    var oBtn = document.getElementsByClassName('back_top')[0];
+    var timer = null;
+
+    // 滚动滚动条，返回顶部按钮显示和隐藏
+    window.onscroll = function () {
+      var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      if (scrollTop >= 666) {
+        oBtn.style.display = 'block';
+      } else {
+        oBtn.style.display = 'none';
+      }
+    };
+
+    oBtn.onclick = function () {
+      var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      timer = setInterval(function () {
+        scrollTop -= 50;
+
+        document.documentElement.scrollTop = scrollTop; // 除谷歌之外的
+        document.body.scrollTop = scrollTop; // 谷歌浏览器
+        if (scrollTop <= 0) {
+          clearInterval(timer);
+        }
+      }, 10);
+    };
+
+
+
+    total_num = Math.ceil(data.data.total / 30);
+        $('.page').pagination({
+            pageCount: total_num,
+            coping: true,
+            homePage: '首页',
+            endPage: '末页',
+            prevContent: '上页',
+            nextContent: '下页',
+            current: 1,
+            count: 1,
+            callback: function(api) {
+                $.ajax({
+                    url: "http://middle-api.plus.vinj.cn/api/publish/column_content_list", // 请求的地址
+                    type: 'get',
+                    data: {
+                        "column_id": column_id,
+                        "page": api.getCurrent(),
+
+                        "per_num": 30
+                    },
+      dataType: "json",
+                    success: function(data) {
+                            $(".street_third_box").html("");
+                       
+                          img_arr = [];
+                            img_title = [];
+                            img_id = [];
+                            img_time = [];
+                        $.each(data.data.data, function(index, item) {
+                              var street_third_main=item.index_pic.split('/');                 
+                              var street_third_arr=street_third_main.splice(3,0,'390x230');               
+                              var street_third_arr2=street_third_main.join('/');
+                              img_arr.push(street_third_arr2);
+                            img_title.push(item.title);
+                            img_id.push(item.origin_id);
+                            time_cut=item.publish_time.substring(0,10);                
+                     img_time.push(time_cut);
+                            $(".street_third_box").append(`
+                                <div class="item " >
+                                    <div class="single_item tz_box" data-id="${img_id[index]}">
+                                        <img  style="width:390px;height:230px" data-src="${img_arr[index]}" src="${st_gaosi_arr[index]}" alt="" oncontextmenu="return false;" ondragstart="return false;">
+                                    </div>
+                                    <div class="p_txt pr">
+                                        <p class="p_title">${img_title[index]}</p>
+                                        <p class="p_time">${img_time[index]}</p>
+                                    </div>
+                                </div>
+                            `)
+
+
+                       })
+        
+                       $('body,html').animate({scrollTop:566},100)
+
+                    },
+                    error: function() {
+                        alert("没有找到对应结果！");
+                    }
+                })
+            }
+        });
+
+
+
+
+
+
+  </script>
+  <!-- <script src="{{$TEMPLATE}}js/browser.min.js"></script> -->
+</body>
+
+</html>

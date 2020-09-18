@@ -1,0 +1,134 @@
+.city_life {
+  background-color: #f7f7f7;
+}
+.city_life .top {
+  background-color: #fff;
+}
+.city_life .top .swiper-slide {
+  width: 85%;
+}
+.city_life .top .swiper-slide .slider_top {
+  height: 1.75rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.city_life .top .swiper-slide .slider_top img {
+  width: 100%;
+}
+.city_life .top .swiper-slide h3 {
+  font-size: 0.16rem;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: #333333;
+  line-height: 0.18rem;
+  padding: 0.1rem 0;
+  visibility: hidden;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.city_life .top .swiper-slide.swiper-slide-active h3 {
+  visibility: visible;
+}
+.city_life .top .myIcon {
+  overflow-x: auto;
+  background-color: #fff;
+  padding: 0.17rem 0rem 0rem 0;
+  margin: 0 0.12rem;
+  box-sizing: border-box;
+  border-top: 0.005rem solid #EEE;
+}
+.city_life .top .myIcon .myIcon_box {
+  overflow-x: auto;
+  width: 100%;
+  display: flex;
+}
+.city_life .top .myIcon .myIcon_box a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  float: left;
+  width: 25%;
+  padding-bottom: 0.17rem;
+}
+.city_life .top .myIcon .myIcon_box a .font {
+  width: 0.25rem;
+  height: 0.25rem;
+}
+.city_life .top .myIcon .myIcon_box a .font img {
+  width: 100%;
+  height: 100%;
+}
+.city_life .top .myIcon .myIcon_box a p {
+  font-size: 0.12rem;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: #333333;
+  margin-top: 0.07rem;
+  display: block;
+  width: .7rem;
+  text-align: center;
+}
+.city_life .top .myIcon .myIcon_box .myIconMore {
+  margin-right: 0.2rem;
+}
+.city_life .hot {
+  background-color: #fff;
+  margin-top: 0.1rem;
+}
+.city_life .hot h3 {
+  padding: 0.12rem;
+  height: 0.2rem;
+  font-size: 0.14rem;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: #666666;
+  line-height: 0.2rem;
+  padding-bottom: 0.12rem;
+}
+.city_life .hot .address a {
+  display: inline-block;
+  height: 0.26rem;
+  border-radius: 0.15rem;
+  border: 0.005rem solid #E5E5E5;
+  margin: 0 0.125rem 0.18rem 0.125rem;
+  text-align: center;
+  line-height: 0.26rem;
+  padding: 0 0.08rem;
+  font-size: 0.12rem;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: #666666;
+}
+.city_life .city_tip {
+  background: #ffffff;
+  margin-top: 0.1rem;
+}
+.city_life .city_tip .title {
+  height: 0.42rem;
+}
+.city_life .city_tip .title h3 {
+  margin: 0 0.125rem;
+  text-align: center;
+  font-size: 0.16rem;
+  font-family: PingFangSC-Semibold;
+  font-weight: 600;
+  color: #333333;
+  line-height: 0.42rem;
+  background: url(../images/line3.png) center bottom no-repeat;
+  background-size: 0.15rem 0.02rem;
+  border-bottom: 0.005rem solid #EEEEEE;
+}
+.city_life .more {
+  padding: 0.1rem 0;
+  background-color: #fff;
+  width: 100%;
+  height: 0.23rem;
+  text-align: center;
+  font-size: 0.12rem;
+  color: #999999;
+  line-height: 0.23rem;
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<style>
+    div{            
+        display: flex;/*显示模式设置为弹性盒子*/
+        flex-wrap: wrap;/*进行强制换行*/
+    }        
+    div:after{            
+        /*对最后一个伪元素进行最大限度伸缩*/            
+        content: ' ';            
+        flex-grow: 999999999999999999999999999999999999;        
+    }        
+    img{             
+        height: 150px;/*高度*/            
+        width: auto;            
+        margin: 2px;            
+        flex-grow: 1;         
+        object-fit: cover;/*进行裁切，并且图片按比例缩放*/        
+    }
+    .intro_title {
+        font-size: 18px;
+        color: #333;
+        font-weight: bold;
+        width: 781px;
+        /* height: 15px; */
+        max-height: 85px;
+        overflow: hidden;
+        transition:max-height 2s;
+        -moz-transition:max-height 2s; /* Firefox 4 */
+        -webkit-transition:max-height 2s; /* Safari and Chrome */
+        -o-transition:max-height 2s; /* Opera */
+    }
+    .intro_title:hover{
+        max-height: unset;
+        /* height: 1000px; */
+        /* width:100px; */
+
+    }
+</style>
+<body>
+    
+    <div class="intro_title">2018年3月14日，位于江宁开发区高新园的南京信息通信产业技术研究院“宽带移动通信设备和应用测试平台”，科研人员正在对通讯设备进行测试。该院由中科院上海微系统与信息技术研究所、东南大学、江宁开发区共同投入优势资源建设，被认定为“江苏省产业技术研究院移动通信技术研究所”，“南京市战略性新兴产业创新中心”。目前拥有研发场所约5100平方米，仪器设备总值约8000万元，构建了6个面向重点任务研发的技术平台。已衍生孵化企业8家科技型企业，其中1家企业于拟在2018年创业板上市。</div>
+</body>
+</html>

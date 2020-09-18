@@ -1,0 +1,47 @@
+// 终端
+    {
+      path: '/terminal',
+      name: 'terminal',
+      component: layout,
+      redirect: { name: 'terminal.web' },
+      meta: { breadcrumbName: '终端数据' },
+      children: [{
+        path: 'web',
+        name: 'terminal.web',
+        component: terminalBasic,
+        meta: { breadcrumbName: '网站分析' },
+        redirect: { name: 'terminal.web.today' },
+        children: [
+          {
+            path: 'today',
+            name: 'terminal.web.today',
+            component: terminalOverview,
+            meta: {
+              breadcrumbName: '当日概览',
+            },
+          }, {
+            path: 'history',
+            name: 'terminal.web.history',
+            component: terminalOverview,
+            meta: {
+              breadcrumbName: '历史趋势',
+            },
+          }],
+      }, {
+        path: 'app',
+        name: 'terminal.app',
+        component: terminalBasic,
+        meta: { breadcrumbName: 'APP分析' },
+        redirect: { name: 'terminal.app' },
+        children: [
+          {
+            path: 'today',
+            name: 'terminal.app.today',
+            component: terminalOverview,
+            meta: {
+              breadcrumbName: '当日概览',
+            },
+          },
+        ],
+      }],
+    },

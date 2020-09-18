@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>jq实现前端文件上传</title>
+</head>
+
+<body>
+    <form id="form1" action="" method="post" enctype="multipart/form-data">
+        <!-- // encype 是文件转码 -->
+        <input type="file" name="upfile" id="upfile" value="" />
+        <input type="button" value="上传" id="btn" />
+    </form>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $("#btn").click(function () {
+            var formData = new FormData();
+            formData.append("pic", document.getElementById("upfile").files[0]);
+            $.ajax({
+                type: "POST", // 数据提交类型
+                url: "", // 发送地址
+                data: formData, //发送数据
+                async: true, // 是否异步
+                processData: false, //processData 默认为false，当设置为true的时候,jquery ajax 提交的时候不会序列化 data，而是直接使用data
+                contentType: false //
+            });
+        });
+
+        function getRad(d) {
+            var PI = Math.PI;
+            return d * PI / 180.0;
+        }
+
+        function getDistance(lat1, lng1, lat2, lng2) {
+            var f = getRad((lat1 + lat2) / 2);
+            var g = getRad((lat1 - lat2) / 2);
+            var l = getRad((lng1 - lng2) / 2);
+            var sg = Math.sin(g);
+            var sl = Math.sin(l);
+            var sf = Math.sin(f);
+            var s, c, w, r, d, h1, h2;
+            var a = 6378137.0; //The Radius of eath in meter.   
+            var fl = 1 / 298.257;
+            sg = sg * sg;
+            sl = sl * sl;
+            sf = sf * sf;
+            s = sg * (1 - sl) + (1 - sf) * sl;
+            c = (1 - sg) * (1 - sl) + sf * sl;
+            w = Math.atan(Math.sqrt(s / c));
+            r = Math.sqrt(s * c) / w;
+            d = 2 * w * a;
+            h1 = (3 * r - 1) / 2 / c;
+            h2 = (3 * r + 1) / 2 / s;
+            s = d * (1 + fl * (h1 * sf * (1 - sg) - h2 * (1 - sf) * sg));
+            s = s / 1000;
+            s = s.toFixed(2); //指定小数点后的位数。   
+            return s;
+        }
+        console.log(getDistance(34.797406,113.708011,31.972643,118.75994361))
+    </script>
+</body>
+
+</html>

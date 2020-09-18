@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1300">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+	<link rel="icon" type="image/x-icon" sizes="16x16" href="{$TEMPLATE}images/logo3x.ico"/>
+    <link rel="stylesheet" href="{$TEMPLATE}css/base.css">
+    <link rel="stylesheet" href="{$TEMPLATE}css/font/iconfont.css">
+    <link rel="stylesheet" href="{$TEMPLATE}css/gallery.css">
+    <link rel="stylesheet" href="{$TEMPLATE}css/common_css/header.css">
+    <link rel="stylesheet" href="{$TEMPLATE}css/common_css/login.css">
+    <link rel="stylesheet" href="{$TEMPLATE}css/common_css/sign.css">
+    <link rel="stylesheet" href="{$TEMPLATE}css/common_css/share.css">
+    <link rel="stylesheet" href="{$TEMPLATE}css/common_css/footer.css">
+    <script src="{{$TEMPLATE}}js/jquery.min.js"></script>
+    <script src="{{$TEMPLATE}}js/jquery.SuperSlide.2.1.3.js"></script>
+    <script src="{{$TEMPLATE}}js/carousel.min.js"></script> 
+  	<style>
+       .add_disable{ pointer-events: none; }
+	   .pinfeng{
+       	width:310px;
+        height:260px;
+        background:rgba(255,255,255,1);
+        padding: 20px;
+    	box-sizing: border-box;
+       }
+	   .pinfeng .title{
+       	font-size:16px;
+        font-family:PingFangSC-Regular,PingFangSC;
+        font-weight:400;
+        color:rgba(79,79,79,1);
+        line-height:22px;
+       }
+    </style>
+</head>
+
+<body>
+
+    <!-- 头部 -->
+    {include $TEMPLATE ."common/header"}
+    <!-- 头部 -->
+    <div class="pic_detail" style="padding-top:66px">
+        <div class="container cl">
+            <div class="bread_nav">
+                <ul class="ul_house">
+                    <li class="house"><a href="{$SITE_URL}" class="sy">首页 &gt;&nbsp;</a></li>
+                    <!--{foreach $parent_column_info $parents}-->
+                    <li><a href="{$parents['column_url']}" title="{$parents['name']}" class="jg">{$parents['name']}</a><span> &gt;&nbsp;</span></li>
+                    <!--{/foreach}-->
+                </ul>
+            </div>
+            <!-- 左边部分 -->
+            <div class="pic_l lf" style="margin-bottom:30px;">
+                <div class="pic_l_box">
+                    <!-- 图片详情和图片轮播 -->
+                    <div class="picFocus">
+                        <!-- 图片轮播缩略图 -->
+                        <div class="banner_breviary">
+                            <div class="large_box">
+                                <ul class="ul1">
+
+
+
+
+                                </ul>
+                            </div>
+
+
+
+                            <div class="small_box pr">
+                                <span class="com left_btn pa" style="left:0;z-index:9"><i class="iconfont">&#xe60d;</i></span>
+                                <div class="small_list">
+                                    <ul class="ul2">
+
+
+                                    </ul>
+                                </div>
+                                <span class="com right_btn pa" style="right:0;z-inde:9"><i class="iconfont">&#xe6b7;</i></span>
+                            </div>
+                        </div>
+                        <!-- 图片轮播缩略图   end-->
+                        <div class="pic_ves cl">
+                            <div class="p_input"><textarea class="w_input" id="w_input" placeholder="添加评论"></textarea></div>
+                            <div class="btn rf"><a href="javascript:void(0);" class="btn_com  btn_disable" id="img_comment"><em>添加评论</em></a></div>
+                        </div>
+                    </div>
+                    <div class="line"></div>
+                    <!-- 图片评论 -->
+                    <div class="pic_comment">
+                        <div class="title">
+                            <span class="main_title">全部评论</span><span class="num"></span>
+                        </div>
+                        <div class="pic_wrap cl">
+                            <!-- 一条条信息 -->
+                            <div class="cntwrap">
+
+                            </div>
+
+                        </div>
+                        <div class="more_scan">
+                            <a href="">查看更多评论</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 右边部分 -->
+            <div class="pic_r rf">
+                <div class="pic_r_box">
+
+                    <div class="r_top">
+                        <div class="upload"> <i class="iconfont">&#xe65b; </i>立即下载</div>
+                        <div class="zan_cang">
+                            <span class="dot_zan"><i class="iconfont">&#xe613;</i>点赞</span>
+                            <span class="cang"><i class="iconfont" data-index="0">&#xe612;</i>收藏</span>
+                        </div>
+                        <div class="canshu">
+                            <div><span class="config">ID：</span><span class="id_num"></span></div>
+                            <div><span class="config">上传：</span ><span class="up_time"></span></div>
+                         	<div><span class="config">浏览量：</span><span class="liu_num"></span></div>
+                         	<!--<div><span class="config">点赞量：</span><span class="click_num"></span></div>-->
+                        </div>
+                    </div>
+                    <div class="r_mid">
+                        <div class="r_mid_title"></div>
+                        <div class="r_mid_txt">
+                           
+                        </div>
+
+                    </div>
+
+                    <div class="r_bot">
+                        <div class="tag_tit">标签</div>
+                        <div class="tag_clss">
+                           
+                        </div>
+                    </div>
+                    <div class="r_person">
+                        
+                        
+                    </div>
+                    <div style="background:rgba(248,248,248,1);height: 20px"></div>
+                    <div class="pinfeng">
+                      <p class="title">请您对该作品打分（10分制）</p>
+                      <input type="text" name="" id="" placeholder="请输入数字">
+                      <button>评分</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+    <!---底部和分享页面---->
+    {include $TEMPLATE ."common/share"} {include $TEMPLATE ."common/footer"}
+    <!---底部和分享页面---->
+	     
+    <?php
+    	if(@$_REQUEST['id']){
+          $cid = @$_REQUEST['id'];
+        }
+    ?>
+        <input class="value" type="hidden" value="{$cid}" />
+          <script type="text/javascript">
+              //面包屑隐藏
+            $(".ul_house li:last span").hide();
+			//	评论状态
+         	
+			 window.onload = function() {
+            $('textarea').bind('input propertychange', function(){  
+              if($("#w_input").val() != ""){  
+                $("#img_comment").removeClass("btn_disable");  
+                $("#img_comment").addClass("btn_a");
+              }else{  
+                $("#img_comment").addClass("btn_disable");  
+                 $("#img_comment").removeClass("btn_a");  
+              };  
+            }); 
+        }
+	   $(".dot_zan i").click(function(){
+          $(this).toggleClass("click_red");
+       })
+     
+   
+          //图片左右箭头
+         document.onkeydown=function(event)
+            {
+            if(event.keyCode==39)
+            {
+             
+            $(".right_btn").click();
+
+            }
+            else if(event.keyCode==37)
+            {
+             
+            $(".left_btn").click();
+            }
+         }
+			 //图片处理
+            function scalingImg(obj) {
+                var $this = $(obj);
+
+                var imgWidth = $this.width();
+                var imgHeight = $this.height();
+
+                var parent = $this.parent();
+                var containerWidth = parent.width();
+                var containerHeight = parent.height();
+
+                var containerRatio = containerWidth / containerHeight;
+                var imgRatio = imgWidth / imgHeight;
+
+                if (imgRatio > containerRatio) {
+                    imgWidth = containerWidth;
+                    imgHeight = containerWidth / imgRatio;
+                } else if (imgRatio < containerRatio) {
+                    imgHeight = containerHeight;
+                    imgWidth = containerHeight * imgRatio;
+                } else {
+                    imgWidth = containerWidth;
+                    imgHeight = containerHeight;
+                }
+
+                $this.attr('width', imgWidth);
+                $this.attr('height', imgHeight);
+            }
+
+         
+        </script>
+        <script type="text/babel">
+            
+            //详情页
+            var cid = $('.value').val();
+            var href = 'http://middle-api.plus.vinj.cn/api/gallery/detail/';
+            var href_xq = 'http://middle-api.plus.vinj.cn/api/gallery/photos/';
+            var urls = href + cid;
+            var urls_xq = href_xq + cid;
+            var gallery_imgarr = [];
+			var gallery_imgarr2 = [];
+            var gallery_titlearr = [];
+            var author = '';
+            var title = '';
+			var img_id=[];
+			var img_width=[];
+			var img_height=[];
+            $.ajax({
+                    url: urls_xq, // 请求的地址
+
+                    type: 'get', // 请求的类型（get post）
+                    data: {
+                    	"per_num":99,
+                    },
+                    dataType: "json", // 期望后端给你返回的数据类型
+                    timeout: 5000, // 如果5秒之后，数据还没有回来，则请求超时
+                    async: true, // 是否异步，默认为true（是异步）
+                    success: function(data) {
+                      
+                   		console.log("图集详情",data);
+                        $.each(data.data.data, function(index, item) {
+                          	var photo_src = item.photo_url;
+                          	photo_src = photo_src.replace('vinj.cn/','vinj.cn/812x/');
+                            gallery_imgarr.push(photo_src);
+							img_id.push(item.id);
+                          	img_width.push(item.width);
+                          	img_height.push(item.height);
+                            gallery_titlearr.push(item.photo_name);
+                           var gallary_pic = item.photo_url.split('/');
+                           var gallary_arr = gallary_pic.splice(3, 0, '138x101');
+                           var gallary_arr2 = gallary_pic.join('/');
+						   gallery_imgarr2.push(gallary_arr2);
+                          	if(item.updated_at.indexOf("2019")!=0){
+                            	$(".up_time").html("2019-04-15");
+                            }else{
+                            	$(".up_time").html(item.updated_at.substring(0,10));
+                            }
+                          
+                            $(".ul1").append(`<li class="li1">
+                                        <div style="height:594px;width:812px;line-height:592px;border: 1px solid #eee;text-align: center;"><img class="yuan_img" style="vertical-align: middle;" onload="scalingImg(this)"  src="${gallery_imgarr[index]}"  alt=""   oncontextmenu="return false;" ondragstart="return false;"></div>
+                                       <div class="main_intro" style="height:144px;">
+                                            <div class="intro_title"></div>
+                                            <div class="intro_txt">${gallery_titlearr[index]}</div>
+                                            <div class="intro_canshu">
+											    <div>
+                                                  
+												</div>
+												 <div>
+                                                    <span style="display:none" class="scan">点赞数：0</span>
+                                                    <span style="display:none" class="fav">下载数：0</span>
+												    <span class="size" style="margin-right: 50px;">尺寸:<span style="margin-left:10px">${img_width[index]}x${img_height[index]}px </span> </span>
+													<span class="tupian">图片ID:<span style="margin-left:10px">00${img_id[index]} </span> </span>	
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                 
+                                    `);
+                            $(".ul2").append(`<li class="">
+                                            <img   src="${gallery_imgarr2[index]}"  alt="" oncontextmenu="return false;" ondragstart="return false;" data-img-id="${img_id[index]}" data-img-url="${gallery_imgarr[index]}">
+                                            <div class="bun_bg"></div>
+                                        </li>`)
+                          	
+							if(item.height==0){
+                               $(".size").hide();
+                               }
+                          
+                        })
+
+					   
+                      
+                        /* 图片轮播图（带缩略图的轮播效果） */
+                        $(".banner_breviary").thumbnailImg({
+                            large_elem: ".large_box",
+                            small_elem: ".small_list",
+                            left_btn: ".left_btn",
+                            right_btn: ".right_btn",
+
+                        });
+                      
+                     
+                    }, // 成功的回调
+
+                    error: function(err) {
+
+                    }, // 失败回调
+                })
+                /* 图片详细信息 */
+            var gallery_name='';
+			var gallear_brief='';
+			var keywords='';
+			var keywords_arr=[];
+			var gallery_id='';
+			var cover_url='';
+			var all_author=[];
+			var clicks='';
+            $.ajax({
+                url: urls, // 请求的地址
+
+                type: 'get', // 请求的类型（get post）
+                data: "",
+                dataType: "json", // 期望后端给你返回的数据类型
+                timeout: 5000, // 如果5秒之后，数据还没有回来，则请求超时
+                async: true, // 是否异步，默认为true（是异步）
+                success: function(data) {
+                  console.log("图片详细信息",data);
+                   clicks=data.data.click_num;
+                   $(".liu_num").text(clicks);
+                    title = data.data.title;
+                    $(".r_mid_title").text(title);
+					 document.title =  title;
+                  	gallear_brief=data.data.brief;
+                  	$(".r_mid_txt").text(gallear_brief);
+                  	gallery_id=data.data.id;
+                  	var gallert_id_num=gallery_id.toString();
+                        if(gallert_id_num.length==1){
+                                $(".id_num").html("000000"+gallert_id_num);
+                           }
+                        else if(gallert_id_num.length==2){
+                                $(".id_num").html("00000"+gallert_id_num);
+                           }
+                        else if(gallert_id_num.length==3){
+                                $(".id_num").html("0000"+gallert_id_num);
+                           }
+                      else if(gallert_id_num.length==4){
+                                $(".id_num").html("000"+gallert_id_num);
+                           }
+                      else if(gallert_id_num.length==5){
+                                $(".id_num").html("00"+gallert_id_num);
+                           }
+                      else if(gallert_id_num.length==6){
+                                $(".id_num").html("0"+gallert_id_num);
+                           }
+                     else{
+                        $(".gallert_id_num").html(gallert_id_num);
+                        }
+                   
+                  	if(!data.data.keywords==""){
+                  		keywords=data.data.keywords;
+                      	keywords_arr=keywords.split(",");
+                     
+                      $.each(keywords_arr,function(index,item){
+                      	  $(".tag_clss").append(`
+								 <span style="margin-bottom:10px;">${item}</span>
+                           
+						`)
+                      })
+                    }
+                   if(data.data.author_info){
+                        $.each(data.data.author_info,function(i,n){
+                             $(".r_person").append(`
+						     	<div class="float_box${i} cl"></div>
+								`)
+                          
+                            var x = ".float_box" + i;
+                            $(x).append(`
+								<div class="proli lf link_common" data-user-id="${n.author_id}">
+                                <div class="head">
+                                    <a href="javascript:void(0)"><img src="" alt=""></a>
+                                </div>
+                                <div class="com_det">
+                                    <div>
+                                        <a href="javascript:void(0)" class="name">${n.author}</a>
+                                    </div>
+                                    <div class="txt">共${n.photo_total}个作品</div>
+                                </div>
+                            </div>
+                            <div class="more rf link_common" data-user-id="${n.author_id}">
+                                <a href="javascript:void(0)">查看更多</a>
+                            </div>
+							`)
+                        })
+                       
+                     }
+                  	 cover_url=data.data.cover_keys[0].cut_url;
+                }, // 成功的回调
+
+                error: function(err) {
+
+                }, // 失败回调
+            })
+			$(document).on("click",".link_common",function(){
+              var link_id=$(this).attr("data-user-id");
+              window.open("http://www.vinj.cn/folder107?link_id="+link_id+ '&type=' + 1);
+            })
+            //评论列表
+           
+                //创建评论
+            function getCookie(name) {
+                var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");　　
+                return (arr = document.cookie.match(reg)) ? unescape(arr[2]) : null;
+            };
+            var islogin = getCookie('accessToken');
+
+
+
+            $(".btn").click(function() {
+                    if (!islogin) {
+
+                        alert("您还没有登录，不能评论");
+                    } else {
+                        //创建评论
+                        $.ajax({
+                            url: "http://mapi.plus.vinj.cn/api/open/middle/comment_create?appid=m2oiacrr7knlqi869e&appkey=02523699ba0579628a1dc8d16defa699", // 请求的地址
+
+                            type: 'post', // 请求的类型（get post）
+                            data: {
+                                "app_uniqueid": "gallery",
+                                "content_id": cid,
+                                "content": $('.p_input textarea').val(),
+                                "access_token": islogin,
+                            },
+                            dataType: "json", // 期望后端给你返回的数据类型
+                            timeout: 5000, // 如果5秒之后，数据还没有回来，则请求超时
+                            async: true, // 是否异步，默认为true（是异步）
+                            success: function(data) {
+                                $('.p_input textarea').val("");
+                                alert(data[0].copywriting);
+								$("#img_comment").addClass("btn_disable");  			
+
+
+                            }, // 成功的回调
+
+                            error: function(err) {
+
+                            }, // 失败回调
+                        });
+                    }
+                })
+                //评论列表
+			
+           	var common_time = [];
+            var common_title = [];
+            var common_img = [];
+            var num = '';
+            var common_author = [];
+			var common_author_img=[];
+            $.ajax({
+                url: "http://mapi.plus.vinj.cn/api/open/middle/comment_list?appid=m2oiacrr7knlqi869e&appkey=02523699ba0579628a1dc8d16defa699", // 请求的地址
+
+                type: 'get', // 请求的类型（get post）
+                data: {
+                    "content_id": cid,
+                    "app_uniqueid": "gallery",
+                },
+                dataType: "json", // 期望后端给你返回的数据类型
+                timeout: 5000, // 如果5秒之后，数据还没有回来，则请求超时
+                async: true, // 是否异步，默认为true（是异步）
+                success: function(data) {
+                  
+                    num = data.data.length;
+                    $(".num").text(num);
+                    $.each(data.data, function(index, item) {
+                        common_time.push(item.created_at.substring(0,16));
+                        common_title.push(item.content);
+                        common_author.push(item.username);
+                       	common_author_img.push(item.member_info.avatar.host+item.member_info.avatar.filename);
+                      
+                        
+                      
+                  if(item.member_info.avatar==""){
+                   
+                      $(".cntwrap").append(`
+								<div class="itm " style="margin-bottom:20px;">
+                                    <div class="head">
+                                       <img src="themes/default/images/grayhead.jpg" alt="">
+                                    </div>
+                                    <div class="com_det">
+                                        <div> <a href="" class="name">${common_author[index]}</a> <span class="time">${common_time[index]}</span></div>
+                                        <div class="txt">${common_title[index]}</div>
+                                    </div>
+                                </div>
+                                
+
+							`)
+                    
+                  }else{
+                    $(".cntwrap").append(`
+								<div class="itm " style="margin-bottom:20px;">
+                                    <div class="head">
+                                       <img src="${common_author_img[index]}"  alt="">
+                                    </div>
+                                    <div class="com_det">
+                                        <div> <a href="" class="name">${common_author[index]}</a> <span class="time">${common_time[index]}</span></div>
+                                        <div class="txt">${common_title[index]}</div>
+                                    </div>
+                                </div>
+                                
+
+							`)
+                    
+                                   
+                  }
+                    })
+				
+                 
+                }, // 成功的回调
+
+                error: function(err) {
+
+                }, // 失败回调
+            });     
+          
+       		//下载图片
+ 			 var islogin = getCookie('accessToken');
+            if(islogin){
+			$(".upload").click(function(){
+           //var data_img_url= $(".ul2 li.on img").attr("data-img-url");
+           var data_img_id= $(".ul2 li.on img").attr("data-img-id");
+           location.href = 'http://middle-api.plus.vinj.cn/api/gallery/download?access_token' + islogin + '&gallery_id=' + cid + '&id=' + data_img_id;
+           return
+            
+              $.ajax({
+                    url: "http://middle-api.plus.vinj.cn/api/gallery/download", // 请求的地址
+
+                    type: 'get', // 请求的类型（get post）
+                    data: {
+                        "access_token":islogin,
+                        "gallery_id":cid,
+                        "id":data_img_id
+                        //"photo_url":data_img_url
+                    },
+                    dataType: "json", // 期望后端给你返回的数据类型
+                    timeout: 5000, // 如果5秒之后，数据还没有回来，则请求超时
+                    async: true, // 是否异步，默认为true（是异步）
+                    success: function(data) {
+                     
+                      //location.href=data.url;
+                    }, // 成功的回调
+
+                    error: function(err) {
+
+                    }, // 失败回调
+                })
+
+            })
+      
+          }else{
+            $(".upload").click(function(){
+                alert("请先登录!");
+               $(".cover1").show();
+            })
+          }  
+			//收藏
+		function zan(val){
+		var off=val;
+          $(".cang i").click(function(){
+            
+            if (off) {
+              $(".cang i").addClass('click_red');
+		  	  $.ajax({
+                    url: "http://plus-middle-end.dev.hoge.cn/api/member/collect/add", // 请求的地址
+
+                    type: 'post', // 请求的类型（get post）
+                    data: {
+                    	"access_token":islogin,
+                        "origin_id":cid,
+                        "title":title,
+                        "index_pic":cover_url,
+                        "type":1,
+                    },
+                    dataType: "json", // 期望后端给你返回的数据类型
+                    timeout: 5000, // 如果5秒之后，数据还没有回来，则请求超时
+                    async: true, // 是否异步，默认为true（是异步）
+                    success: function(data) {
+                      console.log(data);
+                   		
+                      
+                    }, // 成功的回调
+
+                    error: function(err) {
+
+                    }// 失败回调
+                })
+        		off = false;
+            }else {
+              $(".cang i").removeClass('click_red')
+              $.ajax({
+                                url: "http://plus-middle-end.dev.hoge.cn/api/member/collect/del",
+                                 data: {
+                                     "access_token":islogin,
+                                     "origin_id":cid,
+                                     "type":1,
+                                   },
+                                dataType: "json",
+                                timeout: 5000,
+                                async: true,
+                                type: "post",
+                                success: function(data) {
+                              		console.log(data);
+                                 
+                                },
+                                error: function(err) {
+
+                                }
+                            });
+
+                            off = true;
+            }
+	  })
+   }
+
+          //保存状态
+			function save() {
+				 
+             
+				 $.ajax({
+                                url: "http://plus-middle-end.dev.hoge.cn/api/member/collect/is_collect",
+                                data: {
+                                    "access_token":islogin,
+                                     "origin_id":cid,
+                                     "type":1,
+                                   },
+                                dataType: "json",
+                                timeout: 5000,
+                                async: true,
+                                type: "get",
+                                success: function(data) {
+                              		console.log(data);
+                                  	if(data.data.is_collect==1){
+                                       	 zan(false);
+                                      	 $(".cang i").addClass('click_red');
+                                    }else{
+                                      	
+                                    	  zan(true);
+                                      	
+                                    }
+                                },
+                                error: function(err) {
+
+                                }
+                            });
+
+
+            };
+			save();
+			 
+			
+		</script>
+           
+			
+	<script src="{{$TEMPLATE}}js/browser.min.js"></script>
+
+</body>
+
+</html>

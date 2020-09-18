@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <p> {{age}}</p>
+        <blog-post post-title="hello!"></blog-post>
+        <blog-post post-title="postTitle"></blog-post>
+        <blog-post :name='age'></blog-post>
+        <xiaohua>
+           
+        </xiaohua>
+    </div>
+
+</body>
+<script src="https://cdn.bootcss.com/vue/2.5.22/vue.min.js"></script>
+<script src="http://cdn.bootcss.com/crypto-js/3.1.9/crypto-js.js"></script>
+<script>
+    Vue.component('blog-post', {
+        // 在 JavaScript 中是 camelCase 的
+        props: ['postTitle','name'],
+        template: `
+            <div>
+                <h3>{{title}}</h3>
+                <p>{{ postTitle }}</p>
+                <p>{{ name }}</p>
+            </div>
+            `,
+        data(){
+            return { title: '越人歌',name:'小花' }   // 注意写成函数形式
+        }
+    });
+    var xiaohua ={
+        template: '<h3>小花</h3>'
+    };
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            age:'123',
+            data :"en2JprK0nMyYgbd6dQO0O0OO0O0O",
+            key_base:"contentWindowHig",
+            iv_base:"contentDocuments"
+        },
+        components:{
+            xiaohua:xiaohua
+        },
+        methods: {
+            // jiami(){
+            //         console.log(get(data)) // tPYJv39iEbdFD/UqNejyvkLG8ATdifyfE+BDeld2jWk=
+            // },
+            get(a){
+                    var key_hash=CryptoJS.MD5(this.key_base); 
+                    var key=CryptoJS.enc.Utf8.parse(this.key_hash);
+                    var iv=CryptoJS.enc.Utf8.parse(this.iv_base);
+                    var res=CryptoJS.AES.encrypt(a,key,{iv:iv,mode:CryptoJS.mode.CBC,padding:CryptoJS.pad.ZeroPadding});
+                    return res.toString()
+            }
+        },
+        mounted() {
+            this.get()
+            console.log(this.get(this.data))
+        },
+    })
+   
+</script>
+
+</html>

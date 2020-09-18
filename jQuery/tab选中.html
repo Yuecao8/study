@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>下拉菜单变颜色</title> 
+    <script language="javascript" src="./SuperSlide2.1-demo-00/jquery1.42.min.js" type="text/javascript"></script>
+    <script language="javascript" type="text/javascript">
+        var index = 0;
+        $(document).ready(function() {
+            $(window).bind("scroll", function(event) {
+                $(".body_div div").each(function(e) {
+                    var top = $(this)[0].getBoundingClientRect().top;
+                    if (top < 300 && top > 0)
+                        index = e;
+                    if ($(".body_div div").length == e + 1) {
+                        $(".title ul li").eq(index).siblings().removeClass("cu");
+                        $(".title ul li").eq(index).addClass("cu");
+                    }
+                    $(this).html("背景块" + (e + 1));
+                });
+            }); 
+            $("#linkdwon").click(function() {
+                window.scroll(0, $(document).scrollTop() + 300);
+            });
+            $("#linktop").click(function() {
+                window.scroll(0, $(document).scrollTop() - 300);
+            });
+            $(".title ul li").click(function(e) {
+                window.scroll(0, $(".title ul li").index($(this)) * 300);
+            });
+        });
+    </script>
+<style >
+    body,html{ padding:0px; margin:0px; color:#fff; font-size:14px; font-family:Sans-Serif}
+    .body_div div{  height:300px;}
+    .menu{position:fixed; right:10px; border:1px solid #fff;cursor:default; line-height:200%; color:#03f; z-index:100;background:#69f; color:#fff; display:block; height:30px; width:100px; text-align:center; }
+    .link{top:65px; }
+    .link2{top:30px;}
+    .body_div{ margin-top:40px; }
+    .title{ height:40px; position:fixed;  top:0px; color:#333 ; width:100%;}
+    .title ul{ margin:0px; padding:0px; background:#f0f0f0; height:40px; width:100%; margin:0px auto;}
+    .title ul li{ float:left;   font-size:14px; font-family:Sans-Serif;  list-style:none; padding-left:40px; padding-right:40px; line-height:40px; height:40px; cursor:default;}
+    .title ul li.cu{ background:#69f; color:#fff;}
+    .title ul LI:HOVER{background:#69f; color:#fff;}
+</style> 
+</head>
+<body>
+<a class="menu link" id="linkdwon" >下拉</a>
+<a class="menu link2" id="linktop" >上移</a>
+<div class="title">
+<ul>
+<li class="cu">菜单1</li>
+<li>菜单2</li>
+<li>菜单3</li>
+<li>菜单4</li>
+<li>菜单5</li>
+<li>菜单6</li>
+<li>菜单7</li>
+<li>菜单8</li>
+<li>菜单9</li>
+<li>菜单10</li>
+</ul>
+</div>
+<div class="body_div">
+    <div  style=" background:#ccc; height: 1000px">1</div>
+    <div  style=" background:#666; height: 100px">2</div>
+    <div  style=" background:#ccc; height: 2000px">3</div>
+    <div  style=" background:#666; ">4</div>
+    <div  style=" background:#ccc; ">5</div>
+    <div  style=" background:#666; ">6</div>
+    <div  style=" background:#ccc; ">7</div>
+    <div  style=" background:#666; ">8</div> 
+    <div  style=" background:#ccc; ">9</div>
+    <div  style=" background:#666; ">10</div>
+</div>
+
+
+<div style=" height:100PX; background:#fdfdfd; border-top:4px solid #06f;" >FOOTER</div>
+</body>
+</html>

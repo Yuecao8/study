@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>选择感兴趣的话题</title>
+    <script src="./assets/change_resize.js"></script>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="./css/tipics.css">
+    <style>
+        #__vconsole {
+            opacity: 0;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="app" v-cloak v-show='flag'>
+        <div class="tipics">
+            <div class="left">
+                <div>
+                    <a :class="{active:curIndex == index}" v-for="(item,index) in sortsList" :key="index" :data-id="item.id"
+                        @click="getSecondData(index,item.id)">{{item.title}}</a>
+                    <!-- <a>美食</a>
+                    <a class="active">晒照</a>
+                    <a>休闲</a>
+                    <a>运动</a> -->
+                </div>
+            </div>
+            <div class="right">
+                <ul>
+                    <li v-for="(item,index) in cityTipicList" :key="index">
+                        <a class="left_pic" :href='"food.html?_ddtarget=push&id="+item.id'>
+                            <div class="pic">
+                                <img :src="item.indexpic.host?`${item.indexpic.host}${item.indexpic.dir}${item.indexpic.filepath}${item.indexpic.filename}`:'./images/food.png'"
+                                    alt="">
+                            </div>
+                            <div class="text">
+                                <h3>#{{item.title}}#</h3>
+                                <p>{{item.cares_num}}人参与</p>
+                            </div>
+                        </a>
+                        <div class="follow">
+                            <img src="./images/subscribed.png" alt="" v-if="item.is_care" @click.stop="deleteFollowed(index,item.id)"
+                                :data_id="item.id">
+                            <img src="./images/subscribe.png" alt="" v-else @click.stop="getFollowed(index,item.id)"
+                                :data_id="item.id">
+                        </div>
+                    </li>
+                    <!-- <li>
+                        <div class="left_pic">
+                            <div class="pic">
+                                <img src="./images/02.jpg" alt="">
+                            </div>
+                            <div class="text">
+                                <h3>#立冬吃啥#</h3>
+                                <p>3492人参加</p>
+                            </div>
+                        </div>
+                        <div class="follow">
+                            <img src="./images/subscribe.png" alt="">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="left_pic">
+                            <div class="pic">
+                                <img src="./images/02.jpg" alt="">
+                            </div>
+                            <div class="text">
+                                <h3>#立冬吃啥#</h3>
+                                <p>3492人参加</p>
+                            </div>
+                        </div>
+                        <div class="follow">
+                            <img src="./images/subscribe.png" alt="">
+                        </div>
+                    </li>-->
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="./assets/axios.min.js"></script>
+    <script src="./assets/vue.js"></script>
+    <script src="./assets/vconsole.min.js"></script>
+    <script src="./assets/zepto.min.js"></script>
+    <script src="./assets/sdk.js"></script>
+    <script src="./assets/common.js"></script>
+    <script src="./js/tipics.js"></script>
+</body>
+
+
+</html>
